@@ -1,42 +1,51 @@
 import { describe, it, expect } from 'vitest';
-import { vscodeDark } from '../vscode-dark';
+import { themes } from '../index';
 import type { IDETheme } from '../types';
 
-describe('VS Code Dark theme', () => {
-  it('has all required CSS variable keys', () => {
-    const requiredKeys = [
-      '--bg-titlebar',
-      '--bg-activitybar',
-      '--bg-sidebar',
-      '--bg-editor',
-      '--bg-panel',
-      '--bg-statusbar',
-      '--bg-tab-active',
-      '--bg-tab-inactive',
-      '--fg-primary',
-      '--fg-secondary',
-      '--fg-muted',
-      '--accent',
-      '--border',
-      '--bg-hover',
-      '--bg-selection',
-      '--terminal-cursor',
-    ];
-    for (const key of requiredKeys) {
-      expect(vscodeDark.cssVars).toHaveProperty(key);
-    }
+const requiredKeys = [
+  '--bg-titlebar',
+  '--bg-activitybar',
+  '--bg-sidebar',
+  '--bg-editor',
+  '--bg-panel',
+  '--bg-statusbar',
+  '--bg-tab-active',
+  '--bg-tab-inactive',
+  '--fg-primary',
+  '--fg-secondary',
+  '--fg-muted',
+  '--accent',
+  '--border',
+  '--bg-hover',
+  '--bg-selection',
+  '--terminal-cursor',
+];
+
+describe('Theme system', () => {
+  it('has at least 4 themes registered', () => {
+    expect(Object.keys(themes).length).toBeGreaterThanOrEqual(4);
   });
 
-  it('has a valid monaco theme definition', () => {
-    expect(vscodeDark.monacoTheme.base).toBe('vs-dark');
-    expect(vscodeDark.monacoTheme.inherit).toBe(true);
-    expect(vscodeDark.monacoTheme.rules).toBeDefined();
-    expect(vscodeDark.monacoTheme.colors).toBeDefined();
-  });
+  for (const [id, theme] of Object.entries(themes)) {
+    describe(`${theme.name} (${id})`, () => {
+      it('has all required CSS variable keys', () => {
+        for (const key of requiredKeys) {
+          expect(theme.cssVars, `Missing ${key}`).toHaveProperty(key);
+        }
+      });
 
-  it('has required metadata', () => {
-    expect(vscodeDark.id).toBe('vscode-dark');
-    expect(vscodeDark.name).toBe('VS Code Dark');
-    expect(vscodeDark.type).toBe('dark');
-  });
+      it('has a valid monaco theme definition', () => {
+        expect(['vs', 'vs-dark', 'hc-black', 'hc-light']).toContain(theme.monacoTheme.base);
+        expect(theme.monacoTheme.inherit).toBe(true);
+        expect(theme.monacoTheme.rules).toBeDefined();
+        expect(theme.monacoTheme.colors).toBeDefined();
+      });
+
+      it('has required metadata', () => {
+        expect(theme.id).toBe(id);
+        expect(theme.name.length).toBeGreaterThan(0);
+        expect(['dark', 'light']).toContain(theme.type);
+      });
+    });
+  }
 });
