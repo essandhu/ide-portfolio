@@ -20,3 +20,33 @@
   color: var(--fg-muted);
   font-style: italic;
 }
+
+.item {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.file {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.location {
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+.message {
+  color: var(--fg-primary);
+}
+
+.error .message {
+  color: #f44747;
+}
+
+.warning .message {
+  color: #cca700;
+}

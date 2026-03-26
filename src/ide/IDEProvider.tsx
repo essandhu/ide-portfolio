@@ -6,6 +6,14 @@ import { portfolioFs } from '../content/fileSystem';
 export type SidebarPanel = 'explorer' | 'search' | 'extensions' | 'chat';
 export type BottomPanel = 'terminal' | 'problems' | 'output';
 
+export interface Diagnostic {
+  file: string;
+  line: number;
+  column: number;
+  message: string;
+  severity: 'error' | 'warning' | 'info';
+}
+
 export interface IDEContextValue {
   theme: IDETheme;
   setThemeId: (id: string) => void;
@@ -20,6 +28,8 @@ export interface IDEContextValue {
   bottomPanel: BottomPanel;
   setBottomPanel: (panel: BottomPanel) => void;
   vfs: VirtualFileSystem;
+  diagnostics: Diagnostic[];
+  setDiagnostics: (diagnostics: Diagnostic[]) => void;
 }
 
 export const IDEContext = createContext<IDEContextValue | null>(null);
@@ -35,6 +45,7 @@ export function IDEProvider({ children }: IDEProviderProps) {
   const [activeFile, setActiveFile] = useState<string | null>(null);
   const [sidebarPanel, setSidebarPanel] = useState<SidebarPanel>('explorer');
   const [bottomPanel, setBottomPanel] = useState<BottomPanel>('terminal');
+  const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
 
   const vfs = useMemo(() => new VirtualFileSystem(portfolioFs), []);
 
@@ -86,6 +97,8 @@ export function IDEProvider({ children }: IDEProviderProps) {
       bottomPanel,
       setBottomPanel,
       vfs,
+      diagnostics,
+      setDiagnostics,
     }),
     [
       theme,
@@ -98,6 +111,7 @@ export function IDEProvider({ children }: IDEProviderProps) {
       sidebarPanel,
       bottomPanel,
       vfs,
+      diagnostics,
     ],
   );
 

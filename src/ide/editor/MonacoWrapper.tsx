@@ -1,5 +1,7 @@
-import Editor from '@monaco-editor/react';
+import Editor, { type Monaco } from '@monaco-editor/react';
+import { useCallback, useRef } from 'react';
 import { useIDE } from '../useIDE';
+import type { Diagnostic } from '../IDEProvider';
 
 interface MonacoWrapperProps {
   path: string;
@@ -8,7 +10,34 @@ interface MonacoWrapperProps {
 }
 
 export default function MonacoWrapper({ path, value, language }: MonacoWrapperProps) {
-  const { theme, font } = useIDE();
+  const { theme, font, setDiagnostics } = useIDE();
+  const monacoRef = useRef<Monaco | null>(null);
+
+  const handleMount = useCallback(
+    (_editor: unknown, monaco: Monaco) => {
+      monacoRef.current = monaco;
+
+      const updateDiagnostics = () => {
+        const allMarkers = monaco.editor.getModelMarkers({});
+        const mapped: Diagnostic[] = allMarkers.map((m: { resource: { path: string }; startLineNumber: number; startColumn: number; message: string; severity: number }) => ({
+          file: m.resource.path,
+          line: m.startLineNumber,
+          column: m.startColumn,
+          message: m.message,
+          severity: m.severity === 8 ? 'error' as const : m.severity === 4 ? 'warning' as const : 'info' as const,
+        }));
+        setDiagnostics(mapped);
+      };
+
+      monaco.editor.onDidChangeMarkers(() => {
+        updateDiagnostics();
+      });
+
+      // Initial check after a short delay for language service startup
+      setTimeout(updateDiagnostics, 1000);
+    },
+    [setDiagnostics],
+  );
 
   return (
     <Editor
@@ -28,6 +57,7 @@ export default function MonacoWrapper({ path, value, language }: MonacoWrapperPr
       beforeMount={(monaco) => {
         monaco.editor.defineTheme(theme.id, theme.monacoTheme);
       }}
+      onMount={handleMount}
     />
   );
 }
