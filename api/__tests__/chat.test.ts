@@ -94,6 +94,21 @@ describe('chat edge function', () => {
     expect(res.status).toBe(200);
   });
 
+  it('accepts systemPrompt field without error', async () => {
+    const req = new Request('http://localhost/api/chat', {
+      method: 'POST',
+      body: JSON.stringify({
+        message: 'hello',
+        systemPrompt: 'You are a test assistant.',
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const res = await handleChatRequest(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.response).toBeDefined();
+  });
+
   describe('checkRateLimit', () => {
     it('allows requests under the limit', () => {
       expect(checkRateLimit('test-key')).toBe(true);

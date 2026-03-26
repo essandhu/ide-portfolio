@@ -39,7 +39,7 @@ export async function handleChatRequest(req: Request): Promise<Response> {
     });
   }
 
-  let body: { message?: string };
+  let body: { message?: string; systemPrompt?: string };
   try {
     body = await req.json();
   } catch {
@@ -96,7 +96,7 @@ export async function handleChatRequest(req: Request): Promise<Response> {
       body: JSON.stringify({
         model: 'claude-3-haiku-20240307',
         max_tokens: 300,
-        system: 'You are a helpful portfolio assistant. Answer questions about the portfolio owner concisely.',
+        system: body.systemPrompt ?? 'You are a helpful portfolio assistant. Answer questions about the portfolio owner concisely.',
         messages: [
           { role: 'user', content: body.message },
         ],
