@@ -3,6 +3,7 @@ import type { VirtualFileSystem } from './VirtualFileSystem';
 export interface CommandOutput {
   text: string;
   isError?: boolean;
+  clear?: boolean;
 }
 
 export interface CommandContext {
