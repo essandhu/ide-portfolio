@@ -1,0 +1,19 @@
+.terminal {
+  height: 100%;
+  background: var(--bg-panel);
+  color: var(--fg-primary);
+  font-family: var(--font-family, 'JetBrains Mono', monospace);
+  font-size: 13px;
+  padding: 4px 8px;
+  overflow: auto;
+}
+
+.welcome {
+  color: var(--fg-muted);
+  margin-bottom: 4px;
+}
+
+.xtermContainer {
+  flex: 1;
+  min-height: 0;
+}

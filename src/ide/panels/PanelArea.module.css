@@ -1,0 +1,45 @@
+.panelArea {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tabHeaders {
+  display: flex;
+  height: 30px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+
+.tab {
+  padding: 0 12px;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tab:hover {
+  color: var(--fg-primary);
+}
+
+.active {
+  color: var(--fg-primary);
+  border-bottom-color: var(--accent);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.empty {
+  color: var(--fg-muted);
+  padding: 8px;
+  font-size: 13px;
+}
