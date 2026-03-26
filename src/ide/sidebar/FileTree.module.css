@@ -1,0 +1,33 @@
+.fileTree {
+  padding: 4px 0;
+  font-size: 13px;
+  user-select: none;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg-primary);
+}
+
+.entry:hover {
+  background: var(--bg-hover);
+}
+
+.icon {
+  font-size: 12px;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
