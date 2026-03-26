@@ -52,6 +52,14 @@ export function IDE() {
     switch (sidebarPanel) {
       case 'explorer':
         return <FileTree />;
+      case 'search':
+        return (
+          <div style={{ padding: '12px', color: 'var(--fg-muted)', fontSize: '13px' }}>
+            <p style={{ marginBottom: '8px', fontWeight: 600, fontSize: '11px', letterSpacing: '0.5px' }}>SEARCH</p>
+            <p>Search is not yet implemented. Try using the terminal:</p>
+            <code style={{ display: 'block', marginTop: '8px', color: 'var(--fg-primary)' }}>cat about.ts</code>
+          </div>
+        );
       case 'extensions':
         return <Extensions />;
       case 'chat':

@@ -20,7 +20,7 @@
   width: 240px;
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border);
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .editorArea {
