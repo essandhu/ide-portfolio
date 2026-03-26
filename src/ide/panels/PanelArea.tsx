@@ -1,6 +1,7 @@
 import { useIDE } from '../useIDE';
 import type { BottomPanel } from '../IDEProvider';
 import { TerminalPanel } from './TerminalPanel';
+import { Problems } from './Problems';
 import styles from './PanelArea.module.css';
 
 const tabs: { id: BottomPanel; label: string }[] = [
@@ -33,7 +34,7 @@ export function PanelArea() {
         )}
         {bottomPanel === 'problems' && (
           <div data-testid="problems-panel">
-            <p className={styles.empty}>No problems detected.</p>
+            <Problems />
           </div>
         )}
       </div>
