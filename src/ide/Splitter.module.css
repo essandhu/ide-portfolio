@@ -1,0 +1,20 @@
+.splitter {
+  flex-shrink: 0;
+  background: transparent;
+  z-index: 10;
+  transition: background 0.15s;
+}
+
+.splitter:hover {
+  background: var(--accent);
+}
+
+.horizontal {
+  width: 4px;
+  cursor: col-resize;
+}
+
+.vertical {
+  height: 4px;
+  cursor: row-resize;
+}
