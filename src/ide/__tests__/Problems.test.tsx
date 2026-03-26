@@ -4,14 +4,13 @@ import { IDEProvider } from '../IDEProvider';
 import { Problems } from '../panels/Problems';
 
 describe('Problems panel', () => {
-  it('renders zero errors and zero warnings initially', () => {
+  it('shows empty message when no diagnostics', () => {
     render(
       <IDEProvider>
         <Problems />
       </IDEProvider>,
     );
-    expect(screen.getByText(/0 errors/i)).toBeInTheDocument();
-    expect(screen.getByText(/0 warnings/i)).toBeInTheDocument();
+    expect(screen.getByText(/no problems/i)).toBeInTheDocument();
   });
 
   it('renders the problems container', () => {
