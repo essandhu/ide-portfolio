@@ -1,0 +1,54 @@
+.extensions {
+  padding: 8px;
+}
+
+.title {
+  font-size: 11px;
+  color: var(--fg-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.item {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.publisher {
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+.description {
+  font-size: 12px;
+  color: var(--fg-secondary);
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+.installs {
+  font-size: 11px;
+  color: var(--fg-muted);
+}
