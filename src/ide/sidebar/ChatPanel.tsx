@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getChatResponse } from '../../content/chatResponses';
+import { sendChatMessage } from '../../ai/chatClient';
 import styles from './ChatPanel.module.css';
 
 interface Message {
@@ -10,18 +10,25 @@ interface Message {
 export function ChatPanel() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = useCallback(() => {
+  const handleSend = useCallback(async () => {
     const trimmed = input.trim();
-    if (!trimmed) return;
+    if (!trimmed || loading) return;
 
     const userMessage: Message = { role: 'user', content: trimmed };
-    const response = getChatResponse(trimmed);
-    const assistantMessage: Message = { role: 'assistant', content: response };
-
-    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
-  }, [input]);
+    setLoading(true);
+
+    try {
+      const response = await sendChatMessage(trimmed);
+      const assistantMessage: Message = { role: 'assistant', content: response.text };
+      setMessages((prev) => [...prev, assistantMessage]);
+    } finally {
+      setLoading(false);
+    }
+  }, [input, loading]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -53,6 +60,12 @@ export function ChatPanel() {
             <p className={styles.content}>{msg.content}</p>
           </div>
         ))}
+        {loading && (
+          <div className={`${styles.message} ${styles.assistant}`}>
+            <span className={styles.role}>Copilot</span>
+            <p className={styles.thinking}>Copilot is thinking...</p>
+          </div>
+        )}
       </div>
       <div className={styles.inputArea}>
         <input
@@ -62,10 +75,12 @@ export function ChatPanel() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          disabled={loading}
         />
         <button
           className={styles.sendButton}
           onClick={handleSend}
+          disabled={loading}
           aria-label="Send"
         >
           Send
