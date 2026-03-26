@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { savePreference, loadPreference } from '../persistence';
 
 function createMockStorage(): { getItem: (key: string) => string | null; setItem: (key: string, value: string) => void } {

@@ -107,7 +107,7 @@ export class VirtualFileSystem {
       if (!isDirectory(current)) {
         throw new Error(`Not a directory: ${segments.slice(0, i + 1).join('/')}`);
       }
-      const child = current.children.find((c) => c.name === segments[i]);
+      const child: VirtualFile | VirtualDirectory | undefined = current.children.find((c) => c.name === segments[i]);
       if (!child) {
         throw new Error(`Not found: ${segments[i]}`);
       }
@@ -127,7 +127,7 @@ export class VirtualFileSystem {
       if (!isDirectory(current)) {
         return null;
       }
-      const child = current.children.find((c) => c.name === segments[i]);
+      const child: VirtualFile | VirtualDirectory | undefined = current.children.find((c) => c.name === segments[i]);
       if (!child) {
         return null;
       }

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { ghostComments } from '../ghostComments';
-import type { GhostComment } from '../../terminal/VirtualFileSystem';
 
 describe('Ghost comments', () => {
   it('exports a map of file paths to ghost comment arrays', () => {

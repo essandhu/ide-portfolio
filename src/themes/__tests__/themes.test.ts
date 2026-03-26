@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { themes } from '../index';
-import type { IDETheme } from '../types';
 
 const requiredKeys = [
   '--bg-titlebar',
