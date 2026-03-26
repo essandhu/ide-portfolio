@@ -1,0 +1,49 @@
+.picker {
+  position: relative;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.button:hover {
+  color: var(--fg-primary);
+}
+
+.dropdown {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 100;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--bg-hover);
+}
+
+.active {
+  background: var(--bg-selection);
+}
