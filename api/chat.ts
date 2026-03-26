@@ -1,5 +1,36 @@
 import { getChatResponse } from '../src/content/chatResponses';
 
+const MAX_REQUESTS_PER_SESSION = 10;
+const WINDOW_MS = 60 * 60 * 1000; // 1 hour
+
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+const getRateLimitKey = (req: Request): string => {
+  const forwarded = req.headers.get('x-forwarded-for');
+  return forwarded?.split(',')[0]?.trim() ?? 'anonymous';
+};
+
+export const checkRateLimit = (key: string): boolean => {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key);
+
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    return true;
+  }
+
+  if (entry.count >= MAX_REQUESTS_PER_SESSION) {
+    return false;
+  }
+
+  entry.count++;
+  return true;
+};
+
+export const resetRateLimits = (): void => {
+  rateLimitMap.clear();
+};
+
 export async function handleChatRequest(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -23,6 +54,18 @@ export async function handleChatRequest(req: Request): Promise<Response> {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
+  }
+
+  const rateLimitKey = getRateLimitKey(req);
+  if (!checkRateLimit(rateLimitKey)) {
+    const fallbackResponse = getChatResponse(body.message);
+    return new Response(
+      JSON.stringify({ response: fallbackResponse, fallback: true, rateLimited: true }),
+      {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
   }
 
   const apiKey = typeof process !== 'undefined'

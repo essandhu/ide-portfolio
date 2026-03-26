@@ -1,7 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { handleChatRequest } from '../chat';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { handleChatRequest, checkRateLimit, resetRateLimits } from '../chat';
 
 describe('chat edge function', () => {
+  beforeEach(() => {
+    resetRateLimits();
+  });
   it('returns 400 for missing message', async () => {
     const req = new Request('http://localhost/api/chat', {
       method: 'POST',
@@ -42,5 +45,66 @@ describe('chat edge function', () => {
     expect(data.response).toBeDefined();
     expect(typeof data.response).toBe('string');
     expect(data.fallback).toBe(true);
+  });
+
+  it('returns 429 after exceeding rate limit', async () => {
+    // Exhaust the rate limit (10 requests)
+    for (let i = 0; i < 10; i++) {
+      const req = new Request('http://localhost/api/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message: `message ${i}` }),
+        headers: { 'Content-Type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+      });
+      const res = await handleChatRequest(req);
+      expect(res.status).toBe(200);
+    }
+
+    // 11th request should be rate limited
+    const req = new Request('http://localhost/api/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message: 'one more' }),
+      headers: { 'Content-Type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+    });
+    const res = await handleChatRequest(req);
+    expect(res.status).toBe(429);
+    const data = await res.json();
+    expect(data.rateLimited).toBe(true);
+    expect(data.fallback).toBe(true);
+    expect(data.response).toBeDefined();
+  });
+
+  it('rate limits independently per IP', async () => {
+    // Exhaust limit for IP A
+    for (let i = 0; i < 10; i++) {
+      const req = new Request('http://localhost/api/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message: `msg ${i}` }),
+        headers: { 'Content-Type': 'application/json', 'x-forwarded-for': '10.0.0.1' },
+      });
+      await handleChatRequest(req);
+    }
+
+    // IP B should still work
+    const req = new Request('http://localhost/api/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message: 'hello' }),
+      headers: { 'Content-Type': 'application/json', 'x-forwarded-for': '10.0.0.2' },
+    });
+    const res = await handleChatRequest(req);
+    expect(res.status).toBe(200);
+  });
+
+  describe('checkRateLimit', () => {
+    it('allows requests under the limit', () => {
+      expect(checkRateLimit('test-key')).toBe(true);
+      expect(checkRateLimit('test-key')).toBe(true);
+    });
+
+    it('blocks after exceeding limit', () => {
+      for (let i = 0; i < 10; i++) {
+        checkRateLimit('block-key');
+      }
+      expect(checkRateLimit('block-key')).toBe(false);
+    });
   });
 });
