@@ -1,10 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-
-const App = () => <div>IDE Portfolio</div>;
+import { IDEProvider } from './ide/IDEProvider';
+import { IDE } from './ide/IDE';
+import './ide/editor/ghost-comments.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <IDEProvider>
+      <IDE />
+    </IDEProvider>
   </StrictMode>,
 );
