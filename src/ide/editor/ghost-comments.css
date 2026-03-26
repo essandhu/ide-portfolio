@@ -1,0 +1,25 @@
+@keyframes ghostFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.ghost-comment {
+  color: #6a737d;
+  font-style: italic;
+  opacity: 0;
+  animation: ghostFadeIn 0.8s ease-in forwards;
+}
+
+.ghost-delay-1000 { animation-delay: 1s; }
+.ghost-delay-1500 { animation-delay: 1.5s; }
+.ghost-delay-2000 { animation-delay: 2s; }
+.ghost-delay-2500 { animation-delay: 2.5s; }
+.ghost-delay-3000 { animation-delay: 3s; }
+.ghost-delay-3500 { animation-delay: 3.5s; }
+.ghost-delay-4000 { animation-delay: 4s; }
+.ghost-delay-4500 { animation-delay: 4.5s; }
+.ghost-delay-5000 { animation-delay: 5s; }
