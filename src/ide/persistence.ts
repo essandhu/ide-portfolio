@@ -32,3 +32,21 @@ export function loadPreference(key: string, defaultValue?: string, storage?: Sto
   }
   return defaultValue;
 }
+
+export function loadRecentFiles(storage?: Storage): string[] {
+  const store = storage ?? getStorage();
+  if (store) {
+    const raw = store.getItem(`${STORAGE_PREFIX}recentFiles`);
+    if (raw) {
+      try { return JSON.parse(raw); } catch { return []; }
+    }
+  }
+  return [];
+}
+
+export function saveRecentFiles(files: string[], storage?: Storage): void {
+  const store = storage ?? getStorage();
+  if (store) {
+    store.setItem(`${STORAGE_PREFIX}recentFiles`, JSON.stringify(files));
+  }
+}

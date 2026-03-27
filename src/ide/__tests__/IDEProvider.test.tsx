@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { IDEProvider } from '../IDEProvider';
+import { IDEProvider, WELCOME_TAB } from '../IDEProvider';
 import { useIDE } from '../useIDE';
 import type { ReactNode } from 'react';
 
@@ -87,5 +87,54 @@ describe('IDEProvider', () => {
     expect(result.current.bottomPanel).toBe('terminal');
     act(() => result.current.setBottomPanel('problems'));
     expect(result.current.bottomPanel).toBe('problems');
+  });
+
+  it('sidebarVisible defaults to true', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    expect(result.current.sidebarVisible).toBe(true);
+  });
+
+  it('toggleSidebar flips sidebarVisible', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.toggleSidebar());
+    expect(result.current.sidebarVisible).toBe(false);
+    act(() => result.current.toggleSidebar());
+    expect(result.current.sidebarVisible).toBe(true);
+  });
+
+  it('quickOpenVisible defaults to false', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    expect(result.current.quickOpenVisible).toBe(false);
+  });
+
+  it('previewMode defaults to empty object', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    expect(result.current.previewMode).toEqual({});
+  });
+
+  it('togglePreview sets per-file state', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.togglePreview('/src/about.ts'));
+    expect(result.current.previewMode['/src/about.ts']).toBe(true);
+    act(() => result.current.togglePreview('/src/about.ts'));
+    expect(result.current.previewMode['/src/about.ts']).toBe(false);
+  });
+
+  it('recentFiles defaults to empty', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    expect(result.current.recentFiles).toEqual([]);
+  });
+
+  it('openFile adds to recentFiles', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.openFile('/src/about.ts'));
+    expect(result.current.recentFiles).toContain('/src/about.ts');
+  });
+
+  it('openWelcome adds __welcome__ to tabs', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.openWelcome());
+    expect(result.current.openTabs).toContain(WELCOME_TAB);
+    expect(result.current.activeFile).toBe(WELCOME_TAB);
   });
 });

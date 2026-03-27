@@ -1,10 +1,13 @@
-import { createContext, useState, useMemo, useCallback, type ReactNode } from 'react';
+import { createContext, useState, useMemo, useCallback, useEffect, type ReactNode } from 'react';
 import { themes, defaultThemeId, type IDETheme } from '../themes';
 import { VirtualFileSystem } from '../terminal/VirtualFileSystem';
 import { portfolioFs } from '../content/fileSystem';
+import { loadRecentFiles, saveRecentFiles, loadPreference, savePreference } from './persistence';
 
-export type SidebarPanel = 'explorer' | 'search' | 'extensions' | 'chat';
+export type SidebarPanel = 'explorer' | 'search' | 'outline' | 'portfolio' | 'chat';
 export type BottomPanel = 'terminal' | 'problems' | 'output';
+
+export const WELCOME_TAB = '__welcome__';
 
 export interface Diagnostic {
   file: string;
@@ -30,6 +33,15 @@ export interface IDEContextValue {
   vfs: VirtualFileSystem;
   diagnostics: Diagnostic[];
   setDiagnostics: (diagnostics: Diagnostic[]) => void;
+  sidebarVisible: boolean;
+  toggleSidebar: () => void;
+  previewMode: Record<string, boolean>;
+  togglePreview: (path: string) => void;
+  isPreviewable: (path: string) => boolean;
+  recentFiles: string[];
+  quickOpenVisible: boolean;
+  setQuickOpenVisible: (v: boolean) => void;
+  openWelcome: () => void;
 }
 
 export const IDEContext = createContext<IDEContextValue | null>(null);
@@ -46,6 +58,10 @@ export function IDEProvider({ children }: IDEProviderProps) {
   const [sidebarPanel, setSidebarPanel] = useState<SidebarPanel>('explorer');
   const [bottomPanel, setBottomPanel] = useState<BottomPanel>('terminal');
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [previewMode, setPreviewMode] = useState<Record<string, boolean>>({});
+  const [recentFiles, setRecentFiles] = useState<string[]>(() => loadRecentFiles());
+  const [quickOpenVisible, setQuickOpenVisible] = useState(false);
 
   const vfs = useMemo(() => new VirtualFileSystem(portfolioFs), []);
 
@@ -63,6 +79,37 @@ export function IDEProvider({ children }: IDEProviderProps) {
       return [...prev, path];
     });
     setActiveFile(path);
+    if (!path.startsWith('__')) {
+      setRecentFiles(prev => {
+        const next = [path, ...prev.filter(f => f !== path)].slice(0, 5);
+        saveRecentFiles(next);
+        return next;
+      });
+    }
+  }, []);
+
+  const toggleSidebar = useCallback(() => setSidebarVisible(prev => !prev), []);
+
+  const togglePreview = useCallback((path: string) => {
+    setPreviewMode(prev => ({ ...prev, [path]: !prev[path] }));
+  }, []);
+
+  const PREVIEWABLE_PATHS = [
+    '/src/about.ts', '/src/skills.ts', '/src/contact.ts',
+    '/src/projects/project-alpha.tsx', '/src/projects/project-beta.tsx',
+    '/src/experience/current-role.md', '/src/experience/previous-role.md',
+  ];
+
+  const isPreviewable = useCallback((path: string) => {
+    return PREVIEWABLE_PATHS.includes(path);
+  }, []);
+
+  const openWelcome = useCallback(() => {
+    setOpenTabs(prev => {
+      if (prev.includes(WELCOME_TAB)) return prev;
+      return [...prev, WELCOME_TAB];
+    });
+    setActiveFile(WELCOME_TAB);
   }, []);
 
   const closeTab = useCallback((path: string) => {
@@ -82,6 +129,19 @@ export function IDEProvider({ children }: IDEProviderProps) {
     });
   }, [openTabs]);
 
+  useEffect(() => {
+    const hasVisited = loadPreference('hasVisited');
+    if (hasVisited === undefined) {
+      // Either storage is unavailable or user has never visited.
+      // Try to persist the flag — if it sticks, open welcome.
+      savePreference('hasVisited', 'true');
+      const check = loadPreference('hasVisited');
+      if (check === 'true') {
+        openWelcome();
+      }
+    }
+  }, []);
+
   const value = useMemo<IDEContextValue>(
     () => ({
       theme,
@@ -99,6 +159,15 @@ export function IDEProvider({ children }: IDEProviderProps) {
       vfs,
       diagnostics,
       setDiagnostics,
+      sidebarVisible,
+      toggleSidebar,
+      previewMode,
+      togglePreview,
+      isPreviewable,
+      recentFiles,
+      quickOpenVisible,
+      setQuickOpenVisible,
+      openWelcome,
     }),
     [
       theme,
@@ -112,6 +181,14 @@ export function IDEProvider({ children }: IDEProviderProps) {
       bottomPanel,
       vfs,
       diagnostics,
+      sidebarVisible,
+      toggleSidebar,
+      previewMode,
+      togglePreview,
+      isPreviewable,
+      recentFiles,
+      quickOpenVisible,
+      openWelcome,
     ],
   );
 
