@@ -1,13 +1,16 @@
 import { useIDE } from '../useIDE';
+import { WELCOME_TAB } from '../IDEProvider';
 import { getPreviewType } from './previews/previewRegistry';
 import { PreviewToggle } from './PreviewToggle';
 import styles from './TabBar.module.css';
 
 function getFileName(path: string): string {
+  if (path === WELCOME_TAB) return 'Welcome';
   return path.split('/').pop() ?? path;
 }
 
 function getDotClass(path: string): string | null {
+  if (path === WELCOME_TAB) return styles.dotWelcome;
   if (path.endsWith('.ts') || path.endsWith('.tsx')) return styles.dotTs;
   if (path.endsWith('.md')) return styles.dotMd;
   return null;
@@ -48,7 +51,7 @@ export function TabBar() {
           </div>
         );
       })}
-      <PreviewToggle />
+      {activeFile !== WELCOME_TAB && <PreviewToggle />}
     </div>
   );
 }

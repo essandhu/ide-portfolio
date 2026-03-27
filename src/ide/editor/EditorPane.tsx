@@ -1,6 +1,7 @@
 import { useIDE } from '../useIDE';
 import { WELCOME_TAB } from '../IDEProvider';
 import { PreviewPane } from './PreviewPane';
+import { WelcomeTab } from '../welcome/WelcomeTab';
 import styles from './EditorPane.module.css';
 
 export function EditorPane() {
@@ -15,11 +16,7 @@ export function EditorPane() {
   }
 
   if (activeFile === WELCOME_TAB) {
-    return (
-      <div className={styles.placeholder}>
-        <p>Welcome</p>
-      </div>
-    );
+    return <WelcomeTab />;
   }
 
   const file = vfs.readFile(activeFile);
