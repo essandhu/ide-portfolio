@@ -1,0 +1,70 @@
+.outline {
+  height: 100%;
+  overflow-y: auto;
+  background: var(--bg-sidebar);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #bbbbbb;
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid #1e1e1e;
+  user-select: none;
+}
+
+.tree {
+  padding: 4px 0;
+}
+
+.treeItem {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #8b8b8b;
+  cursor: pointer;
+  user-select: none;
+}
+
+.treeItem:hover {
+  background: #2a2d2e;
+  color: #cccccc;
+}
+
+.chevron {
+  font-size: 10px;
+  width: 12px;
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.count {
+  color: #6b6b6b;
+  font-size: 11px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.emptyState {
+  color: #6b6b6b;
+  font-size: 12px;
+  text-align: center;
+  padding: 24px;
+}
+
+.child {
+  padding-left: 24px;
+}

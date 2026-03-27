@@ -5,7 +5,6 @@ import { MenuBar } from './menubar/MenuBar';
 import { ActivityBar } from './activitybar/ActivityBar';
 import { StatusBar } from './statusbar/StatusBar';
 import { FileTree } from './sidebar/FileTree';
-import { Extensions } from './sidebar/Extensions';
 import { ChatPanel } from './sidebar/ChatPanel';
 import { TabBar } from './editor/TabBar';
 import { Breadcrumbs } from './editor/Breadcrumbs';
@@ -14,6 +13,8 @@ import { PanelArea } from './panels/PanelArea';
 import { CommandPalette } from './CommandPalette';
 import { QuickOpen } from './quickopen/QuickOpen';
 import { SearchPanel } from './sidebar/SearchPanel';
+import { OutlinePanel } from './sidebar/OutlinePanel';
+import { PortfolioPanel } from './sidebar/PortfolioPanel';
 import { Splitter } from './Splitter';
 import styles from './IDE.module.css';
 
@@ -99,8 +100,10 @@ export function IDE() {
         return <FileTree />;
       case 'search':
         return <SearchPanel />;
-      case 'extensions':
-        return <Extensions />;
+      case 'outline':
+        return <OutlinePanel />;
+      case 'portfolio':
+        return <PortfolioPanel />;
       case 'chat':
         return <ChatPanel />;
       default:
