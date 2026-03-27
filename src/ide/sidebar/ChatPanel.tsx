@@ -67,6 +67,7 @@ export function ChatPanel() {
       const userMessage: Message = { role: 'user', content: trimmed };
       setMessages((prev) => [...prev, userMessage]);
       setInput('');
+      setLatestResponse('');
       setLoading(true);
 
       try {
