@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
 import { IDE } from '../IDE';
 
@@ -60,5 +61,12 @@ describe('IDE shell', () => {
     const activitybar = screen.getByTestId('activitybar');
     const svgs = activitybar.querySelectorAll('svg');
     expect(svgs.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it('clicking the title bar search trigger opens QuickOpen', async () => {
+    renderIDE();
+    const trigger = screen.getByTestId('title-search-trigger');
+    await userEvent.click(trigger);
+    expect(screen.getByPlaceholderText('Go to File...')).toBeInTheDocument();
   });
 });
