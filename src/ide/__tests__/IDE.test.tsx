@@ -76,4 +76,13 @@ describe('IDE shell', () => {
     await userEvent.click(trigger);
     expect(screen.queryByTestId('title-search-trigger')).not.toBeInTheDocument();
   });
+
+  it('QuickOpen input renders inside the title bar', async () => {
+    renderIDE();
+    const trigger = screen.getByTestId('title-search-trigger');
+    await userEvent.click(trigger);
+    const titlebar = screen.getByTestId('titlebar');
+    const input = screen.getByPlaceholderText('Go to File...');
+    expect(titlebar.contains(input)).toBe(true);
+  });
 });

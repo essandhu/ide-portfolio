@@ -7,7 +7,9 @@ import { QuickOpen } from '../quickopen/QuickOpen';
 function renderQuickOpen(onClose = () => {}) {
   return render(
     <IDEProvider>
-      <QuickOpen onClose={onClose} />
+      <div style={{ position: 'relative' }}>
+        <QuickOpen onClose={onClose} />
+      </div>
     </IDEProvider>,
   );
 }

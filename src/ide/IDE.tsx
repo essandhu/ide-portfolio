@@ -11,7 +11,6 @@ import { Breadcrumbs } from './editor/Breadcrumbs';
 import { EditorPane } from './editor/EditorPane';
 import { PanelArea } from './panels/PanelArea';
 import { CommandPalette } from './CommandPalette';
-import { QuickOpen } from './quickopen/QuickOpen';
 import { SearchPanel } from './sidebar/SearchPanel';
 import { OutlinePanel } from './sidebar/OutlinePanel';
 import { PortfolioPanel } from './sidebar/PortfolioPanel';
@@ -147,7 +146,6 @@ export function IDE() {
         open={paletteOpen}
         onClose={() => setPaletteOpen(false)}
       />
-      {quickOpenVisible && <QuickOpen onClose={() => setQuickOpenVisible(false)} />}
     </div>
   );
 }

@@ -1,41 +1,35 @@
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 250;
-  display: flex;
-  justify-content: center;
-  padding-top: 0;
+.input {
+  width: 100%;
+  height: 20px;
+  padding: 0 8px;
+  font-size: 11px;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  color: var(--fg-primary);
+  outline: none;
+  box-sizing: border-box;
 }
 
-.container {
+.dropdown {
   position: absolute;
-  top: 30px;
-  width: 500px;
+  top: 100%;
+  left: 0;
+  right: 0;
   max-height: 340px;
   background: var(--bg-sidebar);
   border: 1px solid var(--border);
   border-top: none;
   border-radius: 0 0 6px 6px;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.input {
-  width: 100%;
-  padding: 10px 14px;
-  font-size: 14px;
-  background: var(--border);
-  color: var(--fg-primary);
-  border: none;
-  outline: none;
-  box-sizing: border-box;
+  z-index: 260;
 }
 
 .results {
   overflow-y: auto;
-  max-height: 280px;
+  max-height: 320px;
 }
 
 .result {

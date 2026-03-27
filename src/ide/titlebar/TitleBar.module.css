@@ -20,10 +20,17 @@
   flex-shrink: 0;
 }
 
-.titleSearch {
+.searchWrapper {
   flex: 1;
   max-width: 400px;
   margin: 0 auto;
+  position: relative;
+  height: 20px;
+  z-index: 260;
+}
+
+.titleSearch {
+  width: 100%;
   height: 20px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
@@ -44,4 +51,10 @@
 
 .spacer {
   width: 60px;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 255;
 }

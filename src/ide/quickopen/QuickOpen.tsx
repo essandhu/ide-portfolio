@@ -57,23 +57,17 @@ export function QuickOpen({ onClose }: QuickOpenProps) {
     }
   };
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.container}>
-        <input
-          ref={inputRef}
-          className={styles.input}
-          placeholder="Go to File..."
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+    <>
+      <input
+        ref={inputRef}
+        className={styles.input}
+        placeholder="Go to File..."
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      <div className={styles.dropdown}>
         <div className={styles.results} data-testid="quickopen-results">
           {filtered.map((file, i) => {
             const parts = file.split('/');
@@ -95,6 +89,6 @@ export function QuickOpen({ onClose }: QuickOpenProps) {
           })}
         </div>
       </div>
-    </div>
+    </>
   );
 }
