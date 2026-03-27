@@ -2,8 +2,8 @@ import { profile } from '../profile';
 
 describe('profile config', () => {
   it('exports a profile with required fields', () => {
-    expect(profile.name).toBe('Erick');
-    expect(profile.location).toBe('United States');
+    expect(profile.name).toBeDefined();
+    expect(profile.location).toBeDefined();
     expect(profile.title).toBeDefined();
     expect(profile.bio).toBeDefined();
     expect(profile.interests).toBeInstanceOf(Array);

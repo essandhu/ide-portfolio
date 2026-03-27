@@ -1,5 +1,5 @@
 import Editor, { type Monaco } from '@monaco-editor/react';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useIDE } from '../useIDE';
 import type { Diagnostic } from '../IDEProvider';
 
@@ -38,6 +38,13 @@ export default function MonacoWrapper({ path, value, language }: MonacoWrapperPr
     },
     [setDiagnostics],
   );
+
+  useEffect(() => {
+    if (monacoRef.current) {
+      monacoRef.current.editor.defineTheme(theme.id, theme.monacoTheme);
+      monacoRef.current.editor.setTheme(theme.id);
+    }
+  }, [theme]);
 
   return (
     <Editor
