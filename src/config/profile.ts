@@ -35,10 +35,7 @@ export interface Profile {
   interests: string[];
   contact: Contact;
   skills: Skill[];
-  experience: {
-    current: ExperienceRole;
-    previous: ExperienceRole;
-  };
+  experience: ExperienceRole[];
   projects: Project[];
   githubRepoUrl: string;
 }
@@ -58,8 +55,8 @@ export const profile: Profile = {
   skills: [
     { name: 'YOUR_SKILL', category: 'language', proficiency: 3 },
   ],
-  experience: {
-    current: {
+  experience: [
+    {
       company: 'YOUR_CURRENT_COMPANY',
       title: 'YOUR_CURRENT_TITLE',
       period: 'YOUR_CURRENT_PERIOD',
@@ -67,7 +64,7 @@ export const profile: Profile = {
       responsibilities: ['YOUR_CURRENT_RESPONSIBILITY'],
       achievements: ['YOUR_CURRENT_ACHIEVEMENT'],
     },
-    previous: {
+    {
       company: 'YOUR_PREVIOUS_COMPANY',
       title: 'YOUR_PREVIOUS_TITLE',
       period: 'YOUR_PREVIOUS_PERIOD',
@@ -75,7 +72,7 @@ export const profile: Profile = {
       responsibilities: ['YOUR_PREVIOUS_RESPONSIBILITY'],
       achievements: ['YOUR_PREVIOUS_ACHIEVEMENT'],
     },
-  },
+  ],
   projects: [
     {
       name: 'YOUR_PROJECT_NAME',

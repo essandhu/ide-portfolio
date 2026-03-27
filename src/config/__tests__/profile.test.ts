@@ -12,8 +12,9 @@ describe('profile config', () => {
     expect(profile.contact.linkedin).toBeDefined();
     expect(profile.contact.website).toBeDefined();
     expect(profile.skills.length).toBeGreaterThan(0);
-    expect(profile.experience.current.company).toBeDefined();
-    expect(profile.experience.previous.company).toBeDefined();
+    expect(profile.experience).toBeInstanceOf(Array);
+    expect(profile.experience.length).toBeGreaterThan(0);
+    expect(profile.experience[0].company).toBeDefined();
     expect(profile.projects.length).toBeGreaterThan(0);
   });
 
