@@ -4,7 +4,11 @@ import { parseActions } from '../../ai/chatActions';
 import type { ChatAction } from '../../ai/chatActions';
 import { useIDE } from '../useIDE';
 import type { SidebarPanel } from '../IDEProvider';
+import { useTypingEffect } from './useTypingEffect';
 import styles from './ChatPanel.module.css';
+
+const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+const MIN_THINKING_MS = 800;
 
 interface Message {
   role: 'user' | 'assistant';
@@ -52,6 +56,8 @@ export function ChatPanel() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [latestResponse, setLatestResponse] = useState('');
+  const { displayedText, isTyping } = useTypingEffect(latestResponse, 30);
 
   const handleSend = useCallback(
     async (text?: string) => {
@@ -64,10 +70,11 @@ export function ChatPanel() {
       setLoading(true);
 
       try {
-        const response = await sendChatMessage(trimmed);
+        const [response] = await Promise.all([sendChatMessage(trimmed), delay(MIN_THINKING_MS)]);
         const { text: cleanText, actions } = parseActions(response.text);
         const assistantMessage: Message = { role: 'assistant', content: cleanText };
         setMessages((prev) => [...prev, assistantMessage]);
+        setLatestResponse(cleanText);
 
         for (const act of actions) {
           executeAction(act, { openFile, togglePreview, setSidebarPanel, setThemeId, openWelcome });
@@ -110,15 +117,21 @@ export function ChatPanel() {
             </div>
           </div>
         )}
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`${styles.message} ${msg.role === 'user' ? styles.user : styles.assistant}`}
-          >
-            <span className={styles.role}>{msg.role === 'user' ? 'You' : 'Copilot'}</span>
-            <p className={styles.content}>{msg.content}</p>
-          </div>
-        ))}
+        {messages.map((msg, i) => {
+          const isLastAssistant =
+            msg.role === 'assistant' && i === messages.length - 1;
+          const text =
+            isLastAssistant && isTyping ? displayedText : msg.content;
+          return (
+            <div
+              key={i}
+              className={`${styles.message} ${msg.role === 'user' ? styles.user : styles.assistant}`}
+            >
+              <span className={styles.role}>{msg.role === 'user' ? 'You' : 'Copilot'}</span>
+              <p className={styles.content}>{text}</p>
+            </div>
+          );
+        })}
         {loading && (
           <div className={`${styles.message} ${styles.assistant}`}>
             <span className={styles.role}>Copilot</span>
@@ -134,9 +147,9 @@ export function ChatPanel() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          disabled={loading}
+          disabled={loading || isTyping}
         />
-        <button className={styles.sendButton} onClick={() => handleSend()} disabled={loading} aria-label="Send">
+        <button className={styles.sendButton} onClick={() => handleSend()} disabled={loading || isTyping} aria-label="Send">
           &uarr;
         </button>
       </div>
