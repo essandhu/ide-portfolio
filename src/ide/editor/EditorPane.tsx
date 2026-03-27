@@ -1,8 +1,7 @@
-import { Suspense, lazy } from 'react';
 import { useIDE } from '../useIDE';
+import { WELCOME_TAB } from '../IDEProvider';
+import { PreviewPane } from './PreviewPane';
 import styles from './EditorPane.module.css';
-
-const MonacoEditor = lazy(() => import('./MonacoWrapper'));
 
 export function EditorPane() {
   const { activeFile, vfs } = useIDE();
@@ -15,17 +14,23 @@ export function EditorPane() {
     );
   }
 
+  if (activeFile === WELCOME_TAB) {
+    return (
+      <div className={styles.placeholder}>
+        <p>Welcome</p>
+      </div>
+    );
+  }
+
   const file = vfs.readFile(activeFile);
 
   return (
     <div className={styles.editorContainer} data-testid="editor-container">
-      <Suspense fallback={<div className={styles.loading}>Loading editor...</div>}>
-        <MonacoEditor
-          path={activeFile}
-          value={file?.content ?? ''}
-          language={file?.language ?? 'plaintext'}
-        />
-      </Suspense>
+      <PreviewPane
+        path={activeFile}
+        content={file?.content ?? ''}
+        language={file?.language ?? 'plaintext'}
+      />
     </div>
   );
 }

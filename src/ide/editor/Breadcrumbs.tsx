@@ -1,21 +1,28 @@
 import { useIDE } from '../useIDE';
+import { getPreviewType } from './previews/previewRegistry';
 import styles from './Breadcrumbs.module.css';
 
 export function Breadcrumbs() {
-  const { activeFile } = useIDE();
+  const { activeFile, previewMode } = useIDE();
 
   const segments = activeFile
     ? activeFile.split('/').filter((s) => s !== '')
     : [];
 
+  const isPreviewing = activeFile && !!previewMode[activeFile] && !!getPreviewType(activeFile);
+
   return (
     <div className={styles.breadcrumbs} data-testid="breadcrumbs">
-      {segments.map((segment, index) => (
-        <span key={index} className={styles.segment}>
-          {index > 0 && <span className={styles.separator}>›</span>}
-          <span className={styles.label}>{segment}</span>
-        </span>
-      ))}
+      {segments.map((segment, index) => {
+        const isLast = index === segments.length - 1;
+        const label = isLast && isPreviewing ? `${segment} (Preview)` : segment;
+        return (
+          <span key={index} className={styles.segment}>
+            {index > 0 && <span className={styles.separator}>›</span>}
+            <span className={styles.label}>{label}</span>
+          </span>
+        );
+      })}
     </div>
   );
 }
