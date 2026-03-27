@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { profile } from '../../config/profile';
 import { chatResponses, getChatResponse } from '../chatResponses';
 
 describe('Chat responses', () => {
@@ -31,5 +32,27 @@ describe('Chat responses', () => {
     const lower = getChatResponse('projects');
     const upper = getChatResponse('PROJECTS');
     expect(lower).toBe(upper);
+  });
+});
+
+describe('chatResponses uses profile config', () => {
+  it('experience response contains current company', () => {
+    const response = getChatResponse('experience');
+    expect(response).toContain(profile.experience.current.company);
+  });
+
+  it('contact response contains email', () => {
+    const response = getChatResponse('contact');
+    expect(response).toContain(profile.contact.email);
+  });
+
+  it('skills response contains first skill name', () => {
+    const response = getChatResponse('skills');
+    expect(response).toContain(profile.skills[0]?.name);
+  });
+
+  it('projects response contains first project name', () => {
+    const response = getChatResponse('projects');
+    expect(response).toContain(profile.projects[0]?.name);
   });
 });

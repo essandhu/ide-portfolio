@@ -1,40 +1,69 @@
+import { profile } from '../config/profile';
+
+const categoryLabels: Record<string, string> = {
+  language: 'Languages',
+  framework: 'Frontend & Frameworks',
+  tool: 'Tools',
+  platform: 'Platforms',
+};
+
+function buildSkillsResponse(): string {
+  const grouped: Record<string, string[]> = {};
+  for (const skill of profile.skills) {
+    const label = categoryLabels[skill.category] ?? skill.category;
+    if (!grouped[label]) grouped[label] = [];
+    grouped[label].push(skill.name);
+  }
+  const lines = Object.entries(grouped)
+    .map(([label, names]) => `- **${label}**: ${names.join(', ')}`)
+    .join('\n');
+  return `My core skills span the full stack:\n\n${lines}\n\nCheck \`cat skills.ts\` in the terminal for the full list!`;
+}
+
+function buildProjectsResponse(): string {
+  const lines = profile.projects
+    .map((p) => `- **${p.name}**: ${p.description}`)
+    .join('\n');
+  return `I've worked on several exciting projects! Check out the projects/ directory for details. Highlights include:\n\n${lines}\n\nTry \`npm run projects\` in the terminal for a quick overview!`;
+}
+
+function buildExperienceResponse(): string {
+  const { current, previous } = profile.experience;
+  return `I've been building software professionally:
+
+- **${current.title} @ ${current.company}** (${current.period}): ${current.responsibilities[0] ?? ''}
+- **${previous.title} @ ${previous.company}** (${previous.period}): ${previous.responsibilities[0] ?? ''}
+
+Open the experience/ folder in the file tree to see the details — the diff view shows my career growth!`;
+}
+
+function buildAboutResponse(): string {
+  return `${profile.bio}
+
+Run \`cat about.ts\` in the terminal or click about.ts in the file tree to learn more!`;
+}
+
+function buildContactResponse(): string {
+  return `You can reach me through:
+
+- **Email**: ${profile.contact.email}
+- **GitHub**: ${profile.contact.github}
+- **LinkedIn**: ${profile.contact.linkedin}
+- **Website**: ${profile.contact.website}
+
+Or check \`cat contact.ts\` in the terminal!`;
+}
+
 const responses: Record<string, string> = {
-  projects: `I've worked on several exciting projects! Check out the projects/ directory for details. Highlights include:
+  projects: buildProjectsResponse(),
 
-- **IDE Portfolio**: This very site — a browser-based VS Code replica built with React, TypeScript, and Monaco Editor.
-- **Cloud Dashboard**: Real-time infrastructure monitoring with interactive charts.
+  skills: buildSkillsResponse(),
 
-Try \`npm run projects\` in the terminal for a quick overview!`,
+  experience: buildExperienceResponse(),
 
-  skills: `My core skills span the full stack:
+  about: buildAboutResponse(),
 
-- **Languages**: TypeScript (expert), JavaScript, Python
-- **Frontend**: React, Next.js, CSS/Design Systems
-- **Backend**: Node.js, PostgreSQL, GraphQL
-- **Tools**: Git, Docker, Vite, Vitest
-- **Platforms**: AWS, Vercel
-
-Check \`cat skills.ts\` in the terminal for the full list!`,
-
-  experience: `I've been building software professionally since 2020:
-
-- **Senior Engineer @ Acme Corp** (2022–Present): Leading frontend architecture, mentoring engineers, and driving testing culture.
-- **Software Engineer @ StartupXYZ** (2020–2022): Full-stack development, auth systems, and API design.
-
-Open the experience/ folder in the file tree to see the details — the diff view shows my career growth!`,
-
-  about: `I'm a full-stack software engineer passionate about building elegant, user-facing products. I focus on TypeScript, React, and cloud-native architectures.
-
-Run \`cat about.ts\` in the terminal or click about.ts in the file tree to learn more!`,
-
-  contact: `You can reach me through:
-
-- **Email**: hello@erick.dev
-- **GitHub**: github.com/erick
-- **LinkedIn**: linkedin.com/in/erick
-- **Website**: erick.dev
-
-Or check \`cat contact.ts\` in the terminal!`,
+  contact: buildContactResponse(),
 
   hello: `Hello! Welcome to my IDE portfolio. I'm an AI assistant here to help you explore.
 
