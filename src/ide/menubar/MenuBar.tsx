@@ -3,9 +3,10 @@ import { useIDE } from '../useIDE';
 import { themes } from '../../themes';
 import { Menu } from './Menu';
 import type { MenuDefinition } from './menuData';
+import { profile } from '../../config/profile';
 import styles from './MenuBar.module.css';
 
-const GITHUB_REPO_URL = 'https://github.com/erickirt/ide-portfolio';
+const GITHUB_REPO_URL = profile.githubRepoUrl;
 
 export const MenuBar = () => {
   const {

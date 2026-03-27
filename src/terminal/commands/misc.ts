@@ -1,5 +1,6 @@
 import type { CommandRegistry, Command } from '../CommandRegistry';
 import { themes } from '../../themes';
+import { profile } from '../../config/profile';
 
 const clear: Command = {
   name: 'clear',
@@ -13,7 +14,7 @@ const whoami: Command = {
   name: 'whoami',
   description: 'Display user identity',
   execute: () => {
-    return { text: 'Erick — Software Engineer' };
+    return { text: `${profile.name} — ${profile.title}` };
   },
 };
 

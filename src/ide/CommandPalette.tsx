@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useIDE } from './useIDE';
 import { themes } from '../themes';
+import { profile } from '../config/profile';
 import styles from './CommandPalette.module.css';
 
 interface PaletteCommand {
@@ -67,7 +68,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
     },
     {
       id: 'portfolio:project-alpha',
-      label: 'Portfolio: IDE Portfolio',
+      label: `Portfolio: ${profile.projects[0]?.name ?? 'Project'}`,
       action: () => {
         openFile('/src/projects/project-alpha.tsx');
         onClose();
@@ -75,7 +76,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
     },
     {
       id: 'portfolio:project-beta',
-      label: 'Portfolio: Cloud Dashboard',
+      label: `Portfolio: ${profile.projects[1]?.name ?? 'Project'}`,
       action: () => {
         openFile('/src/projects/project-beta.tsx');
         onClose();
@@ -83,7 +84,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
     },
     {
       id: 'portfolio:current-role',
-      label: 'Portfolio: Acme Corp \u00b7 Senior Engineer',
+      label: `Portfolio: ${profile.experience.current.company} \u00b7 ${profile.experience.current.title}`,
       action: () => {
         openFile('/src/experience/current-role.md');
         onClose();
@@ -91,7 +92,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
     },
     {
       id: 'portfolio:previous-role',
-      label: 'Portfolio: StartupXYZ \u00b7 Engineer',
+      label: `Portfolio: ${profile.experience.previous.company} \u00b7 ${profile.experience.previous.title}`,
       action: () => {
         openFile('/src/experience/previous-role.md');
         onClose();

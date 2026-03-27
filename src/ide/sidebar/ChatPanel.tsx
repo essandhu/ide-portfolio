@@ -5,6 +5,7 @@ import type { ChatAction } from '../../ai/chatActions';
 import { useIDE } from '../useIDE';
 import type { SidebarPanel } from '../IDEProvider';
 import { useTypingEffect } from './useTypingEffect';
+import { profile } from '../../config/profile';
 import styles from './ChatPanel.module.css';
 
 const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
@@ -16,10 +17,10 @@ interface Message {
 }
 
 const STARTER_PROMPTS = [
-  "What are Erick's strongest skills?",
+  `What are ${profile.name}'s strongest skills?`,
   'Show me recent projects',
   'Tell me about his experience',
-  'Is Erick available for new roles?',
+  `Is ${profile.name} available for new roles?`,
 ];
 
 function executeAction(

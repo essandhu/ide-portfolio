@@ -1,26 +1,20 @@
 import type { CommandRegistry, Command } from '../CommandRegistry';
+import { profile } from '../../config/profile';
 
 const careerHistory = [
   {
     hash: 'a3f8c2d',
-    date: '2024-Present',
-    author: 'Erick',
-    message: 'feat: senior software engineer @ Current Company',
-    body: 'Leading frontend architecture, building design systems, mentoring junior devs.',
+    date: profile.experience.current.period,
+    author: profile.name,
+    message: `feat: ${profile.experience.current.title.toLowerCase()} @ ${profile.experience.current.company}`,
+    body: profile.experience.current.responsibilities[0] ?? '',
   },
   {
     hash: 'b7e1a4f',
-    date: '2022-2024',
-    author: 'Erick',
-    message: 'feat: software engineer @ Previous Company',
-    body: 'Full-stack development with React, Node.js, and TypeScript.',
-  },
-  {
-    hash: 'c9d2b5e',
-    date: '2020-2022',
-    author: 'Erick',
-    message: 'feat: junior developer @ First Company',
-    body: 'Built internal tools and customer-facing web applications.',
+    date: profile.experience.previous.period,
+    author: profile.name,
+    message: `feat: ${profile.experience.previous.title.toLowerCase()} @ ${profile.experience.previous.company}`,
+    body: profile.experience.previous.responsibilities[0] ?? '',
   },
 ];
 

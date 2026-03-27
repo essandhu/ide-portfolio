@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
 import { PortfolioPanel } from '../sidebar/PortfolioPanel';
+import { profile } from '../../config/profile';
 
 function renderPortfolioPanel() {
   return render(
@@ -30,8 +31,8 @@ describe('PortfolioPanel', () => {
     renderPortfolioPanel();
     const projectsHeader = screen.getByText('Projects');
     await userEvent.click(projectsHeader);
-    expect(screen.getByText('IDE Portfolio')).toBeInTheDocument();
-    expect(screen.getByText('Cloud Dashboard')).toBeInTheDocument();
+    expect(screen.getByText(profile.projects[0]?.name ?? 'Project')).toBeInTheDocument();
+    expect(screen.getByText(profile.projects[1]?.name ?? 'Project')).toBeInTheDocument();
   });
 
   it('shows first-visit hint', () => {

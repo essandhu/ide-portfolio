@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useIDE } from '../useIDE';
 import { loadPreference, savePreference } from '../persistence';
+import { profile } from '../../config/profile';
 import styles from './PortfolioPanel.module.css';
 
 interface LeafItem {
@@ -20,16 +21,16 @@ const portfolioSections: PortfolioSection[] = [
     name: 'Projects',
     items: [
       {
-        label: 'IDE Portfolio',
+        label: profile.projects[0]?.name ?? 'Project',
         path: '/src/projects/project-alpha.tsx',
         dot: '#3b8eea',
-        tooltip: 'A browser-based VS Code replica serving as a personal portfolio',
+        tooltip: profile.projects[0]?.description ?? '',
       },
       {
-        label: 'Cloud Dashboard',
+        label: profile.projects[1]?.name ?? 'Project',
         path: '/src/projects/project-beta.tsx',
         dot: '#3b8eea',
-        tooltip: 'Real-time infrastructure monitoring with interactive charts and alerts',
+        tooltip: profile.projects[1]?.description ?? '',
       },
     ],
   },
@@ -37,16 +38,16 @@ const portfolioSections: PortfolioSection[] = [
     name: 'Experience',
     items: [
       {
-        label: 'Acme Corp \u00b7 Senior Engineer',
+        label: `${profile.experience.current.company} \u00b7 ${profile.experience.current.title}`,
         path: '/src/experience/current-role.md',
         dot: '#4ec9b0',
-        tooltip: '2022 \u2013 Present \u00b7 Remote',
+        tooltip: `${profile.experience.current.period} \u00b7 ${profile.experience.current.location}`,
       },
       {
-        label: 'StartupXYZ \u00b7 Engineer',
+        label: `${profile.experience.previous.company} \u00b7 ${profile.experience.previous.title}`,
         path: '/src/experience/previous-role.md',
         dot: '#4ec9b0',
-        tooltip: '2020 \u2013 2022 \u00b7 San Francisco, CA',
+        tooltip: `${profile.experience.previous.period} \u00b7 ${profile.experience.previous.location}`,
       },
     ],
   },

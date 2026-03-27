@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { IDEProvider } from '../IDEProvider';
 import { WelcomeTab } from '../welcome/WelcomeTab';
+import { profile } from '../../config/profile';
 
 function renderWelcome() {
   return render(
@@ -14,15 +15,15 @@ function renderWelcome() {
 describe('WelcomeTab', () => {
   it('renders the header with name and role', () => {
     renderWelcome();
-    expect(screen.getByText('Erick')).toBeInTheDocument();
-    expect(screen.getByText('Full-Stack Software Engineer')).toBeInTheDocument();
+    expect(screen.getByText(profile.name)).toBeInTheDocument();
+    expect(screen.getByText(profile.title)).toBeInTheDocument();
   });
 
   it('renders four walkthrough rows', () => {
     renderWelcome();
     expect(screen.getByText('View projects')).toBeInTheDocument();
     expect(screen.getByText('Read resume')).toBeInTheDocument();
-    expect(screen.getByText('Chat with Erick')).toBeInTheDocument();
+    expect(screen.getByText(`Chat with ${profile.name}`)).toBeInTheDocument();
     expect(screen.getByText('Get in touch')).toBeInTheDocument();
   });
 
