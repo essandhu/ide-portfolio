@@ -53,3 +53,38 @@
 .close:hover {
   background: var(--bg-hover);
 }
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotTs {
+  background: #3b8eea;
+}
+
+.dotMd {
+  background: #4daafc;
+}
+
+.previewBtn {
+  margin-left: auto;
+  margin-right: 10px;
+  align-self: center;
+  background: none;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
+  color: #8b8b8b;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.previewBtn:hover { border-color: #6a6a6a; color: #ccc; background: #2a2a2a; }
+.previewActive { border-color: #3b8eea; color: #3b8eea; background: rgba(59,142,234,0.08); }
