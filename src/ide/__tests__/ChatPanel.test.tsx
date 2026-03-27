@@ -27,6 +27,42 @@ describe('ChatPanel', () => {
     expect(screen.getByRole('button', { name: /send/i })).toBeInTheDocument();
   });
 
+  it('displays the COPILOT title', () => {
+    render(
+      <IDEProvider>
+        <ChatPanel />
+      </IDEProvider>,
+    );
+    expect(screen.getByText('COPILOT')).toBeInTheDocument();
+  });
+
+  it('shows starter chips when no messages', () => {
+    render(
+      <IDEProvider>
+        <ChatPanel />
+      </IDEProvider>,
+    );
+    expect(screen.getByText("What are Erick's strongest skills?")).toBeInTheDocument();
+    expect(screen.getByText('Show me recent projects')).toBeInTheDocument();
+    expect(screen.getByText('Tell me about his experience')).toBeInTheDocument();
+    expect(screen.getByText('Is Erick available for new roles?')).toBeInTheDocument();
+  });
+
+  it('hides starter chips after a message is sent', async () => {
+    render(
+      <IDEProvider>
+        <ChatPanel />
+      </IDEProvider>,
+    );
+    const input = screen.getByPlaceholderText(/ask me/i);
+    await userEvent.type(input, 'hello');
+    await userEvent.click(screen.getByRole('button', { name: /send/i }));
+
+    await waitFor(() => {
+      expect(screen.queryByText("What are Erick's strongest skills?")).not.toBeInTheDocument();
+    });
+  });
+
   it('displays a response when user sends a message', async () => {
     render(
       <IDEProvider>
