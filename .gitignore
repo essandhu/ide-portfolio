@@ -23,3 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 .worktrees/
+
+# Internal docs/plans (not for public repo)
+docs/
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Environment files
+.env
+.env.*
