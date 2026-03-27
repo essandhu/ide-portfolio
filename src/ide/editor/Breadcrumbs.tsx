@@ -1,11 +1,13 @@
 import { useIDE } from '../useIDE';
+import { WELCOME_TAB } from '../IDEProvider';
 import { getPreviewType } from './previews/previewRegistry';
 import styles from './Breadcrumbs.module.css';
 
 export function Breadcrumbs() {
   const { activeFile, previewMode } = useIDE();
 
-  const segments = activeFile
+  const isWelcome = activeFile === WELCOME_TAB;
+  const segments = activeFile && !isWelcome
     ? activeFile.split('/').filter((s) => s !== '')
     : [];
 

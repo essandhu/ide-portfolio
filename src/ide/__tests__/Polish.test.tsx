@@ -16,16 +16,15 @@ describe('Polish & micro-interactions', () => {
     expect(explorerButton.className).toContain('active');
   });
 
-  it('title bar has traffic light dots', () => {
+  it('title bar contains menu bar', () => {
     render(
       <IDEProvider>
         <IDE />
       </IDEProvider>,
     );
     const titlebar = screen.getByTestId('titlebar');
-    // Should contain 3 dots (close, minimize, maximize)
-    const dots = titlebar.querySelectorAll('[class*="dot"]');
-    expect(dots.length).toBe(3);
+    const menubar = titlebar.querySelector('[data-testid="menubar-bar"]');
+    expect(menubar).toBeInTheDocument();
   });
 
   it('IDE applies theme CSS variables to root', () => {

@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useIDE } from './useIDE';
 import { TitleBar } from './titlebar/TitleBar';
-import { MenuBar } from './menubar/MenuBar';
+
 import { ActivityBar } from './activitybar/ActivityBar';
 import { StatusBar } from './statusbar/StatusBar';
 import { FileTree } from './sidebar/FileTree';
@@ -114,7 +114,6 @@ export function IDE() {
   return (
     <div className={styles.ide}>
       <TitleBar />
-      <MenuBar />
       <div className={styles.main}>
         <ActivityBar />
         {sidebarVisible && (

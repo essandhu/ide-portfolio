@@ -1,10 +1,8 @@
 .menuBar {
-  height: 30px;
-  background: #3c3c3c;
   display: flex;
   align-items: center;
   user-select: none;
-  flex-shrink: 0;
+  height: 100%;
 }
 
 .menuLabelWrapper {
