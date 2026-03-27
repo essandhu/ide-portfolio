@@ -41,4 +41,11 @@ describe('IDE shell', () => {
     renderIDE();
     expect(screen.getByTestId('panel-area')).toBeInTheDocument();
   });
+
+  it('renders the panel area inside the editor area', () => {
+    renderIDE();
+    const editorArea = screen.getByTestId('editor-area');
+    const panelArea = screen.getByTestId('panel-area');
+    expect(editorArea.contains(panelArea)).toBe(true);
+  });
 });

@@ -132,15 +132,15 @@ export function IDE() {
           <TabBar />
           <Breadcrumbs />
           <EditorPane />
+          <Splitter direction="vertical" onResize={handlePanelResize} />
+          <div
+            className={styles.panelArea}
+            data-testid="panel-area"
+            style={{ height: `${panelHeight}px` }}
+          >
+            <PanelArea />
+          </div>
         </div>
-      </div>
-      <Splitter direction="vertical" onResize={handlePanelResize} />
-      <div
-        className={styles.panelArea}
-        data-testid="panel-area"
-        style={{ height: `${panelHeight}px` }}
-      >
-        <PanelArea />
       </div>
       <StatusBar />
       <CommandPalette
