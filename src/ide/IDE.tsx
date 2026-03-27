@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useIDE } from './useIDE';
 import { TitleBar } from './titlebar/TitleBar';
+import { MenuBar } from './menubar/MenuBar';
 import { ActivityBar } from './activitybar/ActivityBar';
 import { StatusBar } from './statusbar/StatusBar';
 import { FileTree } from './sidebar/FileTree';
@@ -15,7 +16,18 @@ import { Splitter } from './Splitter';
 import styles from './IDE.module.css';
 
 export function IDE() {
-  const { theme, sidebarPanel } = useIDE();
+  const {
+    theme,
+    sidebarPanel,
+    sidebarVisible,
+    toggleSidebar,
+    activeFile,
+    closeTab,
+    togglePreview,
+    isPreviewable,
+    quickOpenVisible,
+    setQuickOpenVisible,
+  } = useIDE();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(240);
   const [panelHeight, setPanelHeight] = useState(200);
@@ -28,17 +40,48 @@ export function IDE() {
     }
   }, [theme]);
 
-  // Global keyboard shortcut for command palette
+  // Global keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
+      const mod = e.ctrlKey || e.metaKey;
+
+      if (mod && e.shiftKey && e.key === 'P') {
         e.preventDefault();
         setPaletteOpen((prev) => !prev);
+        return;
+      }
+
+      if (mod && !e.shiftKey && e.key === 'p') {
+        e.preventDefault();
+        setQuickOpenVisible(!quickOpenVisible);
+        return;
+      }
+
+      if (mod && !e.shiftKey && e.key === 'b') {
+        e.preventDefault();
+        toggleSidebar();
+        return;
+      }
+
+      if (mod && e.shiftKey && (e.key === 'V' || e.key === 'v')) {
+        e.preventDefault();
+        if (activeFile && isPreviewable(activeFile)) {
+          togglePreview(activeFile);
+        }
+        return;
+      }
+
+      if (mod && !e.shiftKey && e.key === 'w') {
+        e.preventDefault();
+        if (activeFile) {
+          closeTab(activeFile);
+        }
+        return;
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [quickOpenVisible, activeFile, toggleSidebar, togglePreview, isPreviewable, closeTab, setQuickOpenVisible]);
 
   const handleSidebarResize = useCallback((delta: number) => {
     setSidebarWidth((prev) => Math.max(150, Math.min(500, prev + delta)));
@@ -72,16 +115,21 @@ export function IDE() {
   return (
     <div className={styles.ide}>
       <TitleBar />
+      <MenuBar />
       <div className={styles.main}>
         <ActivityBar />
-        <div
-          className={styles.sidebar}
-          data-testid="sidebar"
-          style={{ width: `${sidebarWidth}px` }}
-        >
-          {renderSidebar()}
-        </div>
-        <Splitter direction="horizontal" onResize={handleSidebarResize} />
+        {sidebarVisible && (
+          <>
+            <div
+              className={styles.sidebar}
+              data-testid="sidebar"
+              style={{ width: `${sidebarWidth}px` }}
+            >
+              {renderSidebar()}
+            </div>
+            <Splitter direction="horizontal" onResize={handleSidebarResize} />
+          </>
+        )}
         <div className={styles.editorArea} data-testid="editor-area">
           <TabBar />
           <Breadcrumbs />
@@ -101,6 +149,7 @@ export function IDE() {
         open={paletteOpen}
         onClose={() => setPaletteOpen(false)}
       />
+      {quickOpenVisible && <div data-testid="quick-open" />}
     </div>
   );
 }
