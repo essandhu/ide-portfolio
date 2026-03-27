@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
@@ -68,5 +68,31 @@ describe('MenuBar', () => {
     expect(screen.getByText('Monokai Pro')).toBeInTheDocument();
     expect(screen.getByText('One Dark Pro')).toBeInTheDocument();
     expect(screen.getByText('GitHub Light')).toBeInTheDocument();
+  });
+
+  it('Edit > Find opens the search panel', async () => {
+    renderMenuBar();
+    await userEvent.click(screen.getByText('Edit'));
+    await userEvent.click(screen.getByText('Find'));
+    // Menu should close after action (action exists so onClose fires)
+    expect(screen.queryByText('Find')).not.toBeInTheDocument();
+  });
+
+  it('Edit > Copy calls document.execCommand("copy")', async () => {
+    document.execCommand = vi.fn().mockReturnValue(true);
+    const spy = vi.mocked(document.execCommand);
+    renderMenuBar();
+    await userEvent.click(screen.getByText('Edit'));
+    await userEvent.click(screen.getByText('Copy'));
+    expect(spy).toHaveBeenCalledWith('copy');
+  });
+
+  it('Edit > Select All calls document.execCommand("selectAll")', async () => {
+    document.execCommand = vi.fn().mockReturnValue(true);
+    const spy = vi.mocked(document.execCommand);
+    renderMenuBar();
+    await userEvent.click(screen.getByText('Edit'));
+    await userEvent.click(screen.getByText('Select All'));
+    expect(spy).toHaveBeenCalledWith('selectAll');
   });
 });

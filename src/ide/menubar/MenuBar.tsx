@@ -58,10 +58,10 @@ export const MenuBar = () => {
     {
       label: 'Edit',
       items: [
-        { id: 'edit-find', label: 'Find', shortcut: '\u2318F' },
+        { id: 'edit-find', label: 'Find', shortcut: '\u2318F', action: () => setSidebarPanel('search') },
         { id: 'edit-div-1', label: '', divider: true },
-        { id: 'edit-copy', label: 'Copy', shortcut: '\u2318C' },
-        { id: 'edit-select-all', label: 'Select All', shortcut: '\u2318A' },
+        { id: 'edit-copy', label: 'Copy', shortcut: '\u2318C', action: () => document.execCommand('copy') },
+        { id: 'edit-select-all', label: 'Select All', shortcut: '\u2318A', action: () => document.execCommand('selectAll') },
       ],
     },
     {
