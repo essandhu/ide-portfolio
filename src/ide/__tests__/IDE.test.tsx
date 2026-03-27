@@ -69,4 +69,11 @@ describe('IDE shell', () => {
     await userEvent.click(trigger);
     expect(screen.getByPlaceholderText('Go to File...')).toBeInTheDocument();
   });
+
+  it('hides title search button when QuickOpen is open', async () => {
+    renderIDE();
+    const trigger = screen.getByTestId('title-search-trigger');
+    await userEvent.click(trigger);
+    expect(screen.queryByTestId('title-search-trigger')).not.toBeInTheDocument();
+  });
 });

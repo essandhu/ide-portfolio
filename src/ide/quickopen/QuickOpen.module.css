@@ -4,18 +4,22 @@
   z-index: 250;
   display: flex;
   justify-content: center;
-  padding-top: 80px;
+  padding-top: 0;
 }
 
 .container {
+  position: absolute;
+  top: 30px;
   width: 500px;
   max-height: 340px;
   background: var(--bg-sidebar);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .input {
