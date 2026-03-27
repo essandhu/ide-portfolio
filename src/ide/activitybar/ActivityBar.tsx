@@ -1,3 +1,5 @@
+import { Files, Search, ListTree, Briefcase, MessageSquare } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useIDE } from '../useIDE';
 import type { SidebarPanel } from '../IDEProvider';
 import styles from './ActivityBar.module.css';
@@ -5,15 +7,15 @@ import styles from './ActivityBar.module.css';
 interface ActivityItem {
   id: SidebarPanel;
   label: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 const items: ActivityItem[] = [
-  { id: 'explorer', label: 'Explorer', icon: '📁' },
-  { id: 'search', label: 'Search', icon: '🔍' },
-  { id: 'outline', label: 'Outline', icon: '🗂️' },
-  { id: 'portfolio', label: 'Portfolio', icon: '🗺️' },
-  { id: 'chat', label: 'Chat', icon: '💬' },
+  { id: 'explorer', label: 'Explorer', icon: Files },
+  { id: 'search', label: 'Search', icon: Search },
+  { id: 'outline', label: 'Outline', icon: ListTree },
+  { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
+  { id: 'chat', label: 'Chat', icon: MessageSquare },
 ];
 
 export function ActivityBar() {
@@ -29,7 +31,7 @@ export function ActivityBar() {
           title={item.label}
           aria-label={item.label}
         >
-          <span className={styles.icon}>{item.icon}</span>
+          <item.icon size={24} strokeWidth={1.5} />
         </button>
       ))}
     </div>

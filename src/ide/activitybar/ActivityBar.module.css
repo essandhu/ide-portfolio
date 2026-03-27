@@ -29,9 +29,3 @@
   color: var(--fg-primary);
   border-left-color: var(--accent);
 }
-
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

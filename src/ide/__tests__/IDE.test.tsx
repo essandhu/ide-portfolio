@@ -48,4 +48,11 @@ describe('IDE shell', () => {
     const panelArea = screen.getByTestId('panel-area');
     expect(editorArea.contains(panelArea)).toBe(true);
   });
+
+  it('activity bar icons are SVG elements, not emoji', () => {
+    renderIDE();
+    const activitybar = screen.getByTestId('activitybar');
+    const svgs = activitybar.querySelectorAll('svg');
+    expect(svgs.length).toBeGreaterThanOrEqual(5);
+  });
 });
