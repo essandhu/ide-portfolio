@@ -10,11 +10,10 @@ interface PaletteCommand {
 }
 
 interface CommandPaletteProps {
-  open?: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
-export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
+export function CommandPalette({ onClose }: CommandPaletteProps) {
   const { setThemeId, setFont, openFile } = useIDE();
   const [filter, setFilter] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -25,7 +24,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: `Theme: ${t.name}`,
       action: () => {
         setThemeId(t.id);
-        onClose?.();
+        onClose();
       },
     })),
     ...[
@@ -39,7 +38,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: `Font: ${font}`,
       action: () => {
         setFont(font);
-        onClose?.();
+        onClose();
       },
     })),
     {
@@ -47,7 +46,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Open about.ts',
       action: () => {
         openFile('/src/about.ts');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -55,7 +54,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Open skills.ts',
       action: () => {
         openFile('/src/skills.ts');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -63,7 +62,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Open README.md',
       action: () => {
         openFile('/src/README.md');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -71,7 +70,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: IDE Portfolio',
       action: () => {
         openFile('/src/projects/project-alpha.tsx');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -79,7 +78,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: Cloud Dashboard',
       action: () => {
         openFile('/src/projects/project-beta.tsx');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -87,7 +86,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: Acme Corp \u00b7 Senior Engineer',
       action: () => {
         openFile('/src/experience/current-role.md');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -95,7 +94,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: StartupXYZ \u00b7 Engineer',
       action: () => {
         openFile('/src/experience/previous-role.md');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -103,7 +102,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: All Skills',
       action: () => {
         openFile('/src/skills.ts');
-        onClose?.();
+        onClose();
       },
     },
     {
@@ -111,7 +110,7 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
       label: 'Portfolio: Contact Info',
       action: () => {
         openFile('/src/contact.ts');
-        onClose?.();
+        onClose();
       },
     },
   ];
@@ -125,34 +124,28 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose?.();
+        onClose();
       }
     },
     [onClose],
   );
 
   useEffect(() => {
-    if (open && inputRef.current) {
-      inputRef.current.focus();
-    }
-    if (!open) {
-      setFilter('');
-    }
-  }, [open]);
-
-  if (!open) return null;
+    inputRef.current?.focus();
+  }, []);
 
   return (
-    <div className={styles.overlay} data-testid="command-palette">
-      <div className={styles.palette} onKeyDown={handleKeyDown}>
-        <input
-          ref={inputRef}
-          className={styles.input}
-          type="text"
-          placeholder="Type a command..."
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
+    <>
+      <input
+        ref={inputRef}
+        className={styles.input}
+        type="text"
+        placeholder="Type a command..."
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      <div className={styles.dropdown} data-testid="command-palette">
         <div className={styles.list} data-testid="command-list">
           {filtered.map((cmd) => (
             <button
@@ -165,6 +158,6 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

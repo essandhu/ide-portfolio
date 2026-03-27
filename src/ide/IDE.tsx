@@ -10,7 +10,7 @@ import { TabBar } from './editor/TabBar';
 import { Breadcrumbs } from './editor/Breadcrumbs';
 import { EditorPane } from './editor/EditorPane';
 import { PanelArea } from './panels/PanelArea';
-import { CommandPalette } from './CommandPalette';
+
 import { SearchPanel } from './sidebar/SearchPanel';
 import { OutlinePanel } from './sidebar/OutlinePanel';
 import { PortfolioPanel } from './sidebar/PortfolioPanel';
@@ -29,8 +29,9 @@ export function IDE() {
     isPreviewable,
     quickOpenVisible,
     setQuickOpenVisible,
+    paletteOpen,
+    setPaletteOpen,
   } = useIDE();
-  const [paletteOpen, setPaletteOpen] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(240);
   const [panelHeight, setPanelHeight] = useState(200);
 
@@ -49,7 +50,7 @@ export function IDE() {
 
       if (mod && e.shiftKey && e.key === 'P') {
         e.preventDefault();
-        setPaletteOpen((prev) => !prev);
+        setPaletteOpen(!paletteOpen);
         return;
       }
 
@@ -83,7 +84,7 @@ export function IDE() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [quickOpenVisible, activeFile, toggleSidebar, togglePreview, isPreviewable, closeTab, setQuickOpenVisible]);
+  }, [quickOpenVisible, paletteOpen, activeFile, toggleSidebar, togglePreview, isPreviewable, closeTab, setQuickOpenVisible, setPaletteOpen]);
 
   const handleSidebarResize = useCallback((delta: number) => {
     setSidebarWidth((prev) => Math.max(150, Math.min(500, prev + delta)));
@@ -142,10 +143,6 @@ export function IDE() {
         </div>
       </div>
       <StatusBar />
-      <CommandPalette
-        open={paletteOpen}
-        onClose={() => setPaletteOpen(false)}
-      />
     </div>
   );
 }

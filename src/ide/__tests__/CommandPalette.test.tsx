@@ -4,53 +4,37 @@ import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
 import { CommandPalette } from '../CommandPalette';
 
-describe('CommandPalette', () => {
-  it('is hidden by default', () => {
-    render(
-      <IDEProvider>
-        <CommandPalette />
-      </IDEProvider>,
-    );
-    expect(screen.queryByTestId('command-palette')).not.toBeInTheDocument();
-  });
+function renderPalette(onClose = () => {}) {
+  return render(
+    <IDEProvider>
+      <div style={{ position: 'relative' }}>
+        <CommandPalette onClose={onClose} />
+      </div>
+    </IDEProvider>,
+  );
+}
 
-  it('opens when open prop is true', () => {
-    render(
-      <IDEProvider>
-        <CommandPalette open onClose={() => {}} />
-      </IDEProvider>,
-    );
+describe('CommandPalette', () => {
+  it('renders the command palette', () => {
+    renderPalette();
     expect(screen.getByTestId('command-palette')).toBeInTheDocument();
   });
 
-  it('shows a search input when open', () => {
-    render(
-      <IDEProvider>
-        <CommandPalette open onClose={() => {}} />
-      </IDEProvider>,
-    );
+  it('shows a search input', () => {
+    renderPalette();
     expect(screen.getByPlaceholderText(/type a command/i)).toBeInTheDocument();
   });
 
   it('filters commands by typing', async () => {
-    render(
-      <IDEProvider>
-        <CommandPalette open onClose={() => {}} />
-      </IDEProvider>,
-    );
+    renderPalette();
     const input = screen.getByPlaceholderText(/type a command/i);
     await userEvent.type(input, 'theme');
-    // Should show theme-related commands
     expect(screen.getByTestId('command-list').children.length).toBeGreaterThan(0);
   });
 
   it('calls onClose when Escape is pressed', async () => {
     const onClose = { called: false };
-    render(
-      <IDEProvider>
-        <CommandPalette open onClose={() => { onClose.called = true; }} />
-      </IDEProvider>,
-    );
+    renderPalette(() => { onClose.called = true; });
     await userEvent.keyboard('{Escape}');
     expect(onClose.called).toBe(true);
   });

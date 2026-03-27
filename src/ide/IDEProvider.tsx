@@ -41,6 +41,8 @@ export interface IDEContextValue {
   recentFiles: string[];
   quickOpenVisible: boolean;
   setQuickOpenVisible: (v: boolean) => void;
+  paletteOpen: boolean;
+  setPaletteOpen: (v: boolean) => void;
   openWelcome: () => void;
 }
 
@@ -62,6 +64,7 @@ export function IDEProvider({ children }: IDEProviderProps) {
   const [previewMode, setPreviewMode] = useState<Record<string, boolean>>({});
   const [recentFiles, setRecentFiles] = useState<string[]>(() => loadRecentFiles());
   const [quickOpenVisible, setQuickOpenVisible] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   const vfs = useMemo(() => new VirtualFileSystem(portfolioFs), []);
 
@@ -167,6 +170,8 @@ export function IDEProvider({ children }: IDEProviderProps) {
       recentFiles,
       quickOpenVisible,
       setQuickOpenVisible,
+      paletteOpen,
+      setPaletteOpen,
       openWelcome,
     }),
     [
@@ -188,6 +193,7 @@ export function IDEProvider({ children }: IDEProviderProps) {
       isPreviewable,
       recentFiles,
       quickOpenVisible,
+      paletteOpen,
       openWelcome,
     ],
   );
