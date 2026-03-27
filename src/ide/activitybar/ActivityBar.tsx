@@ -11,7 +11,8 @@ interface ActivityItem {
 const items: ActivityItem[] = [
   { id: 'explorer', label: 'Explorer', icon: '📁' },
   { id: 'search', label: 'Search', icon: '🔍' },
-  { id: 'extensions', label: 'Extensions', icon: '🧩' },
+  { id: 'outline', label: 'Outline', icon: '🗂️' },
+  { id: 'portfolio', label: 'Portfolio', icon: '🗺️' },
   { id: 'chat', label: 'Chat', icon: '💬' },
 ];
 

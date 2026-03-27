@@ -66,6 +66,54 @@ export function CommandPalette({ open = false, onClose }: CommandPaletteProps) {
         onClose?.();
       },
     },
+    {
+      id: 'portfolio:project-alpha',
+      label: 'Portfolio: IDE Portfolio',
+      action: () => {
+        openFile('/src/projects/project-alpha.tsx');
+        onClose?.();
+      },
+    },
+    {
+      id: 'portfolio:project-beta',
+      label: 'Portfolio: Cloud Dashboard',
+      action: () => {
+        openFile('/src/projects/project-beta.tsx');
+        onClose?.();
+      },
+    },
+    {
+      id: 'portfolio:current-role',
+      label: 'Portfolio: Acme Corp \u00b7 Senior Engineer',
+      action: () => {
+        openFile('/src/experience/current-role.md');
+        onClose?.();
+      },
+    },
+    {
+      id: 'portfolio:previous-role',
+      label: 'Portfolio: StartupXYZ \u00b7 Engineer',
+      action: () => {
+        openFile('/src/experience/previous-role.md');
+        onClose?.();
+      },
+    },
+    {
+      id: 'portfolio:skills',
+      label: 'Portfolio: All Skills',
+      action: () => {
+        openFile('/src/skills.ts');
+        onClose?.();
+      },
+    },
+    {
+      id: 'portfolio:contact',
+      label: 'Portfolio: Contact Info',
+      action: () => {
+        openFile('/src/contact.ts');
+        onClose?.();
+      },
+    },
   ];
 
   const filtered = filter
