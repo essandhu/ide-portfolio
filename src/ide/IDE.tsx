@@ -12,6 +12,8 @@ import { Breadcrumbs } from './editor/Breadcrumbs';
 import { EditorPane } from './editor/EditorPane';
 import { PanelArea } from './panels/PanelArea';
 import { CommandPalette } from './CommandPalette';
+import { QuickOpen } from './quickopen/QuickOpen';
+import { SearchPanel } from './sidebar/SearchPanel';
 import { Splitter } from './Splitter';
 import styles from './IDE.module.css';
 
@@ -96,13 +98,7 @@ export function IDE() {
       case 'explorer':
         return <FileTree />;
       case 'search':
-        return (
-          <div style={{ padding: '12px', color: 'var(--fg-muted)', fontSize: '13px' }}>
-            <p style={{ marginBottom: '8px', fontWeight: 600, fontSize: '11px', letterSpacing: '0.5px' }}>SEARCH</p>
-            <p>Search is not yet implemented. Try using the terminal:</p>
-            <code style={{ display: 'block', marginTop: '8px', color: 'var(--fg-primary)' }}>cat about.ts</code>
-          </div>
-        );
+        return <SearchPanel />;
       case 'extensions':
         return <Extensions />;
       case 'chat':
@@ -149,7 +145,7 @@ export function IDE() {
         open={paletteOpen}
         onClose={() => setPaletteOpen(false)}
       />
-      {quickOpenVisible && <div data-testid="quick-open" />}
+      {quickOpenVisible && <QuickOpen onClose={() => setQuickOpenVisible(false)} />}
     </div>
   );
 }

@@ -1,0 +1,102 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 8px;
+}
+
+.header {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 13px;
+  background: var(--bg-editor);
+  color: var(--fg-primary);
+  border: 1px solid var(--border-color);
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.results {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.results::-webkit-scrollbar {
+  width: 4px;
+}
+
+.results::-webkit-scrollbar-thumb {
+  background: var(--fg-muted);
+  border-radius: 2px;
+}
+
+.fileGroup {
+  margin-bottom: 8px;
+}
+
+.fileName {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--fg-primary);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.fileName:hover {
+  color: var(--accent);
+}
+
+.matchLine {
+  font-size: 12px;
+  padding-left: 8px;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.matchLine:hover {
+  background: var(--bg-hover);
+}
+
+.lineNumber {
+  color: var(--fg-muted);
+  min-width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.matchText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noResults {
+  color: var(--fg-muted);
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+.panel mark {
+  background: rgba(255, 213, 79, 0.3);
+  color: inherit;
+}
