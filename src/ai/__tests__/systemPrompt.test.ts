@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { buildSystemPrompt } from '../systemPrompt';
+import { profile } from '../../config/profile';
 
 describe('buildSystemPrompt', () => {
   it('includes portfolio owner identity', () => {
@@ -9,7 +10,7 @@ describe('buildSystemPrompt', () => {
 
   it('includes content from about.ts', () => {
     const prompt = buildSystemPrompt();
-    expect(prompt).toContain('Erick');
+    expect(prompt).toContain(profile.name);
   });
 
   it('includes project information', () => {

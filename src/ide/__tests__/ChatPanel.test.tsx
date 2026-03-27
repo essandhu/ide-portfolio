@@ -3,6 +3,7 @@ import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
 import { ChatPanel } from '../sidebar/ChatPanel';
+import { profile } from '../../config/profile';
 
 vi.mock('../../ai/chatClient', () => ({
   sendChatMessage: vi.fn().mockResolvedValue({ text: 'AI response', fallback: false }),
@@ -42,10 +43,10 @@ describe('ChatPanel', () => {
         <ChatPanel />
       </IDEProvider>,
     );
-    expect(screen.getByText("What are Erick's strongest skills?")).toBeInTheDocument();
+    expect(screen.getByText(`What are ${profile.name}'s strongest skills?`)).toBeInTheDocument();
     expect(screen.getByText('Show me recent projects')).toBeInTheDocument();
     expect(screen.getByText('Tell me about his experience')).toBeInTheDocument();
-    expect(screen.getByText('Is Erick available for new roles?')).toBeInTheDocument();
+    expect(screen.getByText(`Is ${profile.name} available for new roles?`)).toBeInTheDocument();
   });
 
   describe('with fake timers', () => {
@@ -68,7 +69,7 @@ describe('ChatPanel', () => {
       await userEvent.click(screen.getByRole('button', { name: /send/i }));
 
       await waitFor(() => {
-        expect(screen.queryByText("What are Erick's strongest skills?")).not.toBeInTheDocument();
+        expect(screen.queryByText(`What are ${profile.name}'s strongest skills?`)).not.toBeInTheDocument();
       });
     });
 
