@@ -11,7 +11,7 @@
 
 .menuLabel {
   font-size: 13px;
-  color: #cccccc;
+  color: var(--fg-primary);
   padding: 0 10px;
   height: 30px;
   display: flex;
@@ -20,20 +20,20 @@
 }
 
 .menuLabel:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-hover);
 }
 
 .menuLabelActive {
-  background: #094771;
-  color: #ffffff;
+  background: var(--bg-selection);
+  color: var(--fg-primary);
 }
 
 .dropdown {
   position: absolute;
   top: 100%;
   left: 0;
-  background: #252526;
-  border: 1px solid #3c3c3c;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
   min-width: 220px;
   z-index: 300;
   padding: 4px 0;
@@ -41,7 +41,7 @@
 
 .menuItem {
   font-size: 13px;
-  color: #cccccc;
+  color: var(--fg-primary);
   padding: 4px 24px 4px 28px;
   height: 26px;
   display: flex;
@@ -53,7 +53,7 @@
 
 .menuItem:hover,
 .menuItem.focused {
-  background: #094771;
+  background: var(--bg-selection);
 }
 
 .menuItem[data-disabled='true'] {
@@ -75,19 +75,19 @@
 
 .menuItemShortcut {
   margin-left: 24px;
-  color: #6b6b6b;
+  color: var(--fg-muted);
   font-size: 12px;
 }
 
 .menuItemArrow {
   margin-left: 12px;
   font-size: 10px;
-  color: #6b6b6b;
+  color: var(--fg-muted);
 }
 
 .divider {
   height: 1px;
-  background: #3c3c3c;
+  background: var(--border);
   margin: 4px 0;
 }
 
@@ -95,8 +95,8 @@
   position: absolute;
   left: 100%;
   top: 0;
-  background: #252526;
-  border: 1px solid #3c3c3c;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
   min-width: 220px;
   z-index: 301;
   padding: 4px 0;

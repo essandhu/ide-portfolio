@@ -10,8 +10,8 @@
 .container {
   width: 500px;
   max-height: 340px;
-  background: #252526;
-  border: 1px solid #3c3c3c;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -22,8 +22,8 @@
   width: 100%;
   padding: 10px 14px;
   font-size: 14px;
-  background: #3c3c3c;
-  color: #d4d4d4;
+  background: var(--border);
+  color: var(--fg-primary);
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -40,20 +40,20 @@
   padding: 6px 14px;
   font-size: 13px;
   cursor: pointer;
-  color: #d4d4d4;
+  color: var(--fg-primary);
 }
 
 .result:hover,
 .resultSelected {
-  background: #094771;
+  background: var(--bg-selection);
 }
 
 .fileName {
-  color: #d4d4d4;
+  color: var(--fg-primary);
 }
 
 .filePath {
-  color: #6b6b6b;
+  color: var(--fg-muted);
   font-size: 12px;
   margin-left: auto;
 }
