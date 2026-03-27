@@ -1,4 +1,5 @@
 import type { VirtualDirectory, VirtualFile } from '../terminal/VirtualFileSystem';
+import { profile } from '../config/profile';
 
 const aboutTs: VirtualFile = {
   name: 'about.ts',
@@ -10,18 +11,13 @@ const aboutTs: VirtualFile = {
   interests: string[];
 }
 
-export const erick: Person = {
-  name: 'Erick',
-  title: 'Full-Stack Software Engineer',
-  location: 'United States',
-  bio: \`Passionate engineer who loves building elegant, user-facing products.
-Focused on TypeScript, React, and cloud-native architectures.
-Always exploring new tools and pushing the boundaries of web development.\`,
+export const ${profile.name.toLowerCase()}: Person = {
+  name: '${profile.name}',
+  title: '${profile.title}',
+  location: '${profile.location}',
+  bio: \`${profile.bio}\`,
   interests: [
-    'Developer Experience',
-    'Design Systems',
-    'AI-Assisted Development',
-    'Open Source',
+${profile.interests.map((i) => `    '${i}',`).join('\n')}
   ],
 };`,
   originalContent: `interface Person {
@@ -32,18 +28,13 @@ Always exploring new tools and pushing the boundaries of web development.\`,
   interests: string[];
 }
 
-export const erick: Person = {
-  name: 'Erick',
-  title: 'Full-Stack Software Engineer',
-  location: 'United States',
-  bio: \`Passionate engineer who loves building elegant, user-facing products.
-Focused on TypeScript, React, and cloud-native architectures.
-Always exploring new tools and pushing the boundaries of web development.\`,
+export const ${profile.name.toLowerCase()}: Person = {
+  name: '${profile.name}',
+  title: '${profile.title}',
+  location: '${profile.location}',
+  bio: \`${profile.bio}\`,
   interests: [
-    'Developer Experience',
-    'Design Systems',
-    'AI-Assisted Development',
-    'Open Source',
+${profile.interests.map((i) => `    '${i}',`).join('\n')}
   ],
 };`,
   language: 'typescript',
@@ -58,17 +49,7 @@ const skillsTs: VirtualFile = {
 }
 
 export const skills: Skill[] = [
-  { name: 'TypeScript', category: 'language', proficiency: 5 },
-  { name: 'JavaScript', category: 'language', proficiency: 5 },
-  { name: 'Python', category: 'language', proficiency: 4 },
-  { name: 'React', category: 'framework', proficiency: 5 },
-  { name: 'Node.js', category: 'framework', proficiency: 4 },
-  { name: 'Next.js', category: 'framework', proficiency: 4 },
-  { name: 'Vite', category: 'tool', proficiency: 4 },
-  { name: 'Docker', category: 'tool', proficiency: 3 },
-  { name: 'Git', category: 'tool', proficiency: 5 },
-  { name: 'AWS', category: 'platform', proficiency: 3 },
-  { name: 'Vercel', category: 'platform', proficiency: 4 },
+${profile.skills.map((s) => `  { name: '${s.name}', category: '${s.category}', proficiency: ${s.proficiency} },`).join('\n')}
 ];`,
   originalContent: `interface Skill {
   name: string;
@@ -77,17 +58,7 @@ export const skills: Skill[] = [
 }
 
 export const skills: Skill[] = [
-  { name: 'TypeScript', category: 'language', proficiency: 5 },
-  { name: 'JavaScript', category: 'language', proficiency: 5 },
-  { name: 'Python', category: 'language', proficiency: 4 },
-  { name: 'React', category: 'framework', proficiency: 5 },
-  { name: 'Node.js', category: 'framework', proficiency: 4 },
-  { name: 'Next.js', category: 'framework', proficiency: 4 },
-  { name: 'Vite', category: 'tool', proficiency: 4 },
-  { name: 'Docker', category: 'tool', proficiency: 3 },
-  { name: 'Git', category: 'tool', proficiency: 5 },
-  { name: 'AWS', category: 'platform', proficiency: 3 },
-  { name: 'Vercel', category: 'platform', proficiency: 4 },
+${profile.skills.map((s) => `  { name: '${s.name}', category: '${s.category}', proficiency: ${s.proficiency} },`).join('\n')}
 ];`,
   language: 'typescript',
 };
@@ -102,10 +73,10 @@ const contactTs: VirtualFile = {
 }
 
 export const contact: ContactInfo = {
-  email: 'hello@erick.dev',
-  github: 'https://github.com/erick',
-  linkedin: 'https://linkedin.com/in/erick',
-  website: 'https://erick.dev',
+  email: '${profile.contact.email}',
+  github: '${profile.contact.github}',
+  linkedin: '${profile.contact.linkedin}',
+  website: '${profile.contact.website}',
 };`,
   originalContent: `interface ContactInfo {
   email: string;
@@ -115,10 +86,10 @@ export const contact: ContactInfo = {
 }
 
 export const contact: ContactInfo = {
-  email: 'hello@erick.dev',
-  github: 'https://github.com/erick',
-  linkedin: 'https://linkedin.com/in/erick',
-  website: 'https://erick.dev',
+  email: '${profile.contact.email}',
+  github: '${profile.contact.github}',
+  linkedin: '${profile.contact.linkedin}',
+  website: '${profile.contact.website}',
 };`,
   language: 'typescript',
 };
@@ -133,10 +104,10 @@ const projectAlpha: VirtualFile = {
 }
 
 export const ProjectAlpha = (): ProjectProps => ({
-  name: 'IDE Portfolio',
-  description: 'A browser-based VS Code replica serving as a personal portfolio.',
-  tech: ['React', 'TypeScript', 'Monaco Editor', 'xterm.js'],
-  url: 'https://github.com/erick/ide-portfolio',
+  name: '${profile.projects[0]?.name ?? 'Project Alpha'}',
+  description: '${profile.projects[0]?.description ?? 'A project.'}',
+  tech: [${profile.projects[0]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
+  url: '${profile.projects[0]?.url ?? ''}',
 });`,
   originalContent: `interface ProjectProps {
   name: string;
@@ -146,10 +117,10 @@ export const ProjectAlpha = (): ProjectProps => ({
 }
 
 export const ProjectAlpha = (): ProjectProps => ({
-  name: 'IDE Portfolio',
-  description: 'A browser-based VS Code replica serving as a personal portfolio.',
-  tech: ['React', 'TypeScript', 'Monaco Editor', 'xterm.js'],
-  url: 'https://github.com/erick/ide-portfolio',
+  name: '${profile.projects[0]?.name ?? 'Project Alpha'}',
+  description: '${profile.projects[0]?.description ?? 'A project.'}',
+  tech: [${profile.projects[0]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
+  url: '${profile.projects[0]?.url ?? ''}',
 });`,
   language: 'typescriptreact',
 };
@@ -164,10 +135,10 @@ const projectBeta: VirtualFile = {
 }
 
 export const ProjectBeta = (): ProjectProps => ({
-  name: 'Cloud Dashboard',
-  description: 'Real-time infrastructure monitoring with interactive charts and alerts.',
-  tech: ['Next.js', 'TypeScript', 'D3.js', 'WebSocket'],
-  url: 'https://github.com/erick/cloud-dashboard',
+  name: '${profile.projects[1]?.name ?? 'Project Beta'}',
+  description: '${profile.projects[1]?.description ?? 'A project.'}',
+  tech: [${profile.projects[1]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
+  url: '${profile.projects[1]?.url ?? ''}',
 });`,
   originalContent: `interface ProjectProps {
   name: string;
@@ -177,10 +148,10 @@ export const ProjectBeta = (): ProjectProps => ({
 }
 
 export const ProjectBeta = (): ProjectProps => ({
-  name: 'Cloud Dashboard',
-  description: 'Real-time infrastructure monitoring with interactive charts and alerts.',
-  tech: ['Next.js', 'TypeScript', 'D3.js', 'WebSocket'],
-  url: 'https://github.com/erick/cloud-dashboard',
+  name: '${profile.projects[1]?.name ?? 'Project Beta'}',
+  description: '${profile.projects[1]?.description ?? 'A project.'}',
+  tech: [${profile.projects[1]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
+  url: '${profile.projects[1]?.url ?? ''}',
 });`,
   language: 'typescriptreact',
 };
@@ -196,73 +167,55 @@ export { ProjectBeta } from './project-beta';`,
 
 const currentRole: VirtualFile = {
   name: 'current-role.md',
-  content: `# Senior Software Engineer — Acme Corp
+  content: `# ${profile.experience.current.title} — ${profile.experience.current.company}
 
-**2022 – Present** | Remote
-
-## Responsibilities
-
-- Lead frontend architecture for the core product platform
-- Mentor junior engineers through code reviews and pair programming
-- Design and implement CI/CD pipelines reducing deploy time by 60%
-- Build accessible, performant React component library used across 5 teams
-
-## Key Achievements
-
-- Migrated legacy jQuery app to React + TypeScript (6-month project)
-- Reduced bundle size by 40% through code splitting and tree shaking
-- Established testing culture: coverage went from 15% to 85%`,
-  originalContent: `# Software Engineer — Acme Corp
-
-**2022 – Present** | Remote
+**${profile.experience.current.period}** | ${profile.experience.current.location}
 
 ## Responsibilities
 
-- Contribute to frontend development of the core product
-- Participate in code reviews
-- Help maintain CI/CD pipelines
-- Build React components
+${profile.experience.current.responsibilities.map((r) => `- ${r}`).join('\n')}
 
 ## Key Achievements
 
-- Assisted with React migration
-- Helped reduce bundle size
-- Wrote tests for new features`,
+${profile.experience.current.achievements.map((a) => `- ${a}`).join('\n')}`,
+  originalContent: `# ${profile.experience.current.title} — ${profile.experience.current.company}
+
+**${profile.experience.current.period}** | ${profile.experience.current.location}
+
+## Responsibilities
+
+${profile.experience.current.responsibilities.map((r) => `- ${r}`).join('\n')}
+
+## Key Achievements
+
+${profile.experience.current.achievements.map((a) => `- ${a}`).join('\n')}`,
   language: 'markdown',
 };
 
 const previousRole: VirtualFile = {
   name: 'previous-role.md',
-  content: `# Software Engineer — StartupXYZ
+  content: `# ${profile.experience.previous.title} — ${profile.experience.previous.company}
 
-**2020 – 2022** | San Francisco, CA
-
-## Responsibilities
-
-- Built full-stack features using React, Node.js, and PostgreSQL
-- Owned the authentication and authorization system
-- Created internal tooling that saved 20 hours/week of manual work
-
-## Key Achievements
-
-- Designed and shipped OAuth2 integration with 3 identity providers
-- Built real-time notification system using WebSocket
-- Led migration from REST to GraphQL for the mobile API`,
-  originalContent: `# Software Engineer — StartupXYZ
-
-**2020 – 2022** | San Francisco, CA
+**${profile.experience.previous.period}** | ${profile.experience.previous.location}
 
 ## Responsibilities
 
-- Built full-stack features using React, Node.js, and PostgreSQL
-- Owned the authentication and authorization system
-- Created internal tooling that saved 20 hours/week of manual work
+${profile.experience.previous.responsibilities.map((r) => `- ${r}`).join('\n')}
 
 ## Key Achievements
 
-- Designed and shipped OAuth2 integration with 3 identity providers
-- Built real-time notification system using WebSocket
-- Led migration from REST to GraphQL for the mobile API`,
+${profile.experience.previous.achievements.map((a) => `- ${a}`).join('\n')}`,
+  originalContent: `# ${profile.experience.previous.title} — ${profile.experience.previous.company}
+
+**${profile.experience.previous.period}** | ${profile.experience.previous.location}
+
+## Responsibilities
+
+${profile.experience.previous.responsibilities.map((r) => `- ${r}`).join('\n')}
+
+## Key Achievements
+
+${profile.experience.previous.achievements.map((a) => `- ${a}`).join('\n')}`,
   language: 'markdown',
 };
 

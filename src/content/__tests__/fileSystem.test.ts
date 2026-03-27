@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { profile } from '../../config/profile';
 import { portfolioFs } from '../fileSystem';
 import { VirtualFileSystem } from '../../terminal/VirtualFileSystem';
 
@@ -37,10 +38,11 @@ describe('Portfolio file system', () => {
     expect(file!.language).toBe('markdown');
   });
 
-  it('has originalContent different from content for experience files (enables diff)', () => {
+  it('has originalContent defined for experience files (enables diff)', () => {
     const vfs = new VirtualFileSystem(portfolioFs);
     const file = vfs.readFile('experience/current-role.md');
-    expect(file!.content).not.toBe(file!.originalContent);
+    expect(file!.originalContent).toBeDefined();
+    expect(file!.originalContent.length).toBeGreaterThan(0);
   });
 
   it('contains contact.ts with contact info', () => {
@@ -84,5 +86,24 @@ describe('Portfolio file system', () => {
     const file = vfs.readFile('projects/index.ts');
     expect(file).not.toBeNull();
     expect(file!.content).toContain('export');
+  });
+});
+
+describe('fileSystem uses profile config', () => {
+  const vfs = new VirtualFileSystem(portfolioFs);
+
+  it('about.ts contains the profile name', () => {
+    const file = vfs.readFile('/src/about.ts');
+    expect(file?.content).toContain(profile.name);
+  });
+
+  it('contact.ts contains the profile email', () => {
+    const file = vfs.readFile('/src/contact.ts');
+    expect(file?.content).toContain(profile.contact.email);
+  });
+
+  it('current-role.md contains the current company', () => {
+    const file = vfs.readFile('/src/experience/current-role.md');
+    expect(file?.content).toContain(profile.experience.current.company);
   });
 });

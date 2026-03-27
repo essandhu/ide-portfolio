@@ -4,6 +4,7 @@ import { IDEProvider } from '../IDEProvider';
 import { OutlinePanel } from '../sidebar/OutlinePanel';
 import { useIDE } from '../useIDE';
 import { useEffect } from 'react';
+import { profile } from '../../config/profile';
 
 function OpenFileHelper({ path }: { path: string }) {
   const { openFile } = useIDE();
@@ -30,15 +31,16 @@ describe('OutlinePanel', () => {
 
   it('shows semantic outline for a project file', () => {
     renderOutlinePanel('/src/projects/project-alpha.tsx');
-    expect(screen.getByText('IDE Portfolio')).toBeInTheDocument();
+    const projectName = profile.projects[0]?.name ?? 'Project Alpha';
+    expect(screen.getByText(projectName)).toBeInTheDocument();
     expect(screen.getByText(/Stack/)).toBeInTheDocument();
   });
 
   it('shows semantic outline for skills file', () => {
     renderOutlinePanel('/src/skills.ts');
-    expect(screen.getByText(/language/)).toBeInTheDocument();
-    expect(screen.getByText(/framework/)).toBeInTheDocument();
-    expect(screen.getByText(/tool/)).toBeInTheDocument();
-    expect(screen.getByText(/platform/)).toBeInTheDocument();
+    const categories = [...new Set(profile.skills.map((s) => s.category))];
+    for (const cat of categories) {
+      expect(screen.getByText(new RegExp(cat))).toBeInTheDocument();
+    }
   });
 });
