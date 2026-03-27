@@ -36,20 +36,12 @@ const portfolioSections: PortfolioSection[] = [
   },
   {
     name: 'Experience',
-    items: [
-      {
-        label: `${profile.experience.current.company} \u00b7 ${profile.experience.current.title}`,
-        path: '/src/experience/current-role.md',
-        dot: '#4ec9b0',
-        tooltip: `${profile.experience.current.period} \u00b7 ${profile.experience.current.location}`,
-      },
-      {
-        label: `${profile.experience.previous.company} \u00b7 ${profile.experience.previous.title}`,
-        path: '/src/experience/previous-role.md',
-        dot: '#4ec9b0',
-        tooltip: `${profile.experience.previous.period} \u00b7 ${profile.experience.previous.location}`,
-      },
-    ],
+    items: profile.experience.map((role, i) => ({
+      label: `${role.company} \u00b7 ${role.title}`,
+      path: `/src/experience/role-${i}.md`,
+      dot: '#4ec9b0',
+      tooltip: `${role.period} \u00b7 ${role.location}`,
+    })),
   },
   {
     name: 'Skills',

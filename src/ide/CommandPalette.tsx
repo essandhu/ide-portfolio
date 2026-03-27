@@ -82,22 +82,14 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
         onClose();
       },
     },
-    {
-      id: 'portfolio:current-role',
-      label: `Portfolio: ${profile.experience.current.company} \u00b7 ${profile.experience.current.title}`,
+    ...profile.experience.map((role, i) => ({
+      id: `portfolio:role-${i}`,
+      label: `Portfolio: ${role.company} \u00b7 ${role.title}`,
       action: () => {
-        openFile('/src/experience/current-role.md');
+        openFile(`/src/experience/role-${i}.md`);
         onClose();
       },
-    },
-    {
-      id: 'portfolio:previous-role',
-      label: `Portfolio: ${profile.experience.previous.company} \u00b7 ${profile.experience.previous.title}`,
-      action: () => {
-        openFile('/src/experience/previous-role.md');
-        onClose();
-      },
-    },
+    })),
     {
       id: 'portfolio:skills',
       label: 'Portfolio: All Skills',

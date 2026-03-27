@@ -1,22 +1,14 @@
 import type { CommandRegistry, Command } from '../CommandRegistry';
 import { profile } from '../../config/profile';
 
-const careerHistory = [
-  {
-    hash: 'a3f8c2d',
-    date: profile.experience.current.period,
-    author: profile.name,
-    message: `feat: ${profile.experience.current.title.toLowerCase()} @ ${profile.experience.current.company}`,
-    body: profile.experience.current.responsibilities[0] ?? '',
-  },
-  {
-    hash: 'b7e1a4f',
-    date: profile.experience.previous.period,
-    author: profile.name,
-    message: `feat: ${profile.experience.previous.title.toLowerCase()} @ ${profile.experience.previous.company}`,
-    body: profile.experience.previous.responsibilities[0] ?? '',
-  },
-];
+const hashes = ['a3f8c2d', 'b7e1a4f', 'c9d2b5e', 'd1e3f6a', 'e2f4a7b'];
+const careerHistory = profile.experience.map((role, i) => ({
+  hash: hashes[i % hashes.length],
+  date: role.period,
+  author: profile.name,
+  message: `feat: ${role.title.toLowerCase()} @ ${role.company}`,
+  body: role.responsibilities[0] ?? '',
+}));
 
 const gitLog: Command = {
   name: 'git',

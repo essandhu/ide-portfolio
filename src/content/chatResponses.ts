@@ -28,13 +28,10 @@ function buildProjectsResponse(): string {
 }
 
 function buildExperienceResponse(): string {
-  const { current, previous } = profile.experience;
-  return `I've been building software professionally:
-
-- **${current.title} @ ${current.company}** (${current.period}): ${current.responsibilities[0] ?? ''}
-- **${previous.title} @ ${previous.company}** (${previous.period}): ${previous.responsibilities[0] ?? ''}
-
-Open the experience/ folder in the file tree to see the details — the diff view shows my career growth!`;
+  const lines = profile.experience
+    .map((role) => `- **${role.title} @ ${role.company}** (${role.period}): ${role.responsibilities[0] ?? ''}`)
+    .join('\n');
+  return `I've been building software professionally:\n\n${lines}\n\nOpen the experience/ folder in the file tree to see the details — the diff view shows my career growth!`;
 }
 
 function buildAboutResponse(): string {

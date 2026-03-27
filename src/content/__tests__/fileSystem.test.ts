@@ -33,14 +33,14 @@ describe('Portfolio file system', () => {
 
   it('contains experience files as markdown', () => {
     const vfs = new VirtualFileSystem(portfolioFs);
-    const file = vfs.readFile('experience/current-role.md');
+    const file = vfs.readFile('experience/role-0.md');
     expect(file).not.toBeNull();
     expect(file!.language).toBe('markdown');
   });
 
   it('has originalContent defined for experience files (enables diff)', () => {
     const vfs = new VirtualFileSystem(portfolioFs);
-    const file = vfs.readFile('experience/current-role.md');
+    const file = vfs.readFile('experience/role-0.md');
     expect(file!.originalContent).toBeDefined();
     expect(file!.originalContent.length).toBeGreaterThan(0);
   });
@@ -102,8 +102,8 @@ describe('fileSystem uses profile config', () => {
     expect(file?.content).toContain(profile.contact.email);
   });
 
-  it('current-role.md contains the current company', () => {
-    const file = vfs.readFile('/src/experience/current-role.md');
-    expect(file?.content).toContain(profile.experience.current.company);
+  it('role-0.md contains the first company', () => {
+    const file = vfs.readFile('/src/experience/role-0.md');
+    expect(file?.content).toContain(profile.experience[0].company);
   });
 });

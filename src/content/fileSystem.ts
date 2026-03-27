@@ -165,59 +165,12 @@ export { ProjectBeta } from './project-beta';`,
   language: 'typescript',
 };
 
-const currentRole: VirtualFile = {
-  name: 'current-role.md',
-  content: `# ${profile.experience.current.title} — ${profile.experience.current.company}
-
-**${profile.experience.current.period}** | ${profile.experience.current.location}
-
-## Responsibilities
-
-${profile.experience.current.responsibilities.map((r) => `- ${r}`).join('\n')}
-
-## Key Achievements
-
-${profile.experience.current.achievements.map((a) => `- ${a}`).join('\n')}`,
-  originalContent: `# ${profile.experience.current.title} — ${profile.experience.current.company}
-
-**${profile.experience.current.period}** | ${profile.experience.current.location}
-
-## Responsibilities
-
-${profile.experience.current.responsibilities.map((r) => `- ${r}`).join('\n')}
-
-## Key Achievements
-
-${profile.experience.current.achievements.map((a) => `- ${a}`).join('\n')}`,
-  language: 'markdown',
-};
-
-const previousRole: VirtualFile = {
-  name: 'previous-role.md',
-  content: `# ${profile.experience.previous.title} — ${profile.experience.previous.company}
-
-**${profile.experience.previous.period}** | ${profile.experience.previous.location}
-
-## Responsibilities
-
-${profile.experience.previous.responsibilities.map((r) => `- ${r}`).join('\n')}
-
-## Key Achievements
-
-${profile.experience.previous.achievements.map((a) => `- ${a}`).join('\n')}`,
-  originalContent: `# ${profile.experience.previous.title} — ${profile.experience.previous.company}
-
-**${profile.experience.previous.period}** | ${profile.experience.previous.location}
-
-## Responsibilities
-
-${profile.experience.previous.responsibilities.map((r) => `- ${r}`).join('\n')}
-
-## Key Achievements
-
-${profile.experience.previous.achievements.map((a) => `- ${a}`).join('\n')}`,
-  language: 'markdown',
-};
+const experienceFiles: VirtualFile[] = profile.experience.map((role, i) => ({
+  name: `role-${i}.md`,
+  content: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
+  originalContent: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
+  language: 'markdown' as const,
+}));
 
 const readmeMd: VirtualFile = {
   name: 'README.md',
@@ -282,7 +235,7 @@ export const portfolioFs: VirtualDirectory = {
     },
     {
       name: 'experience',
-      children: [currentRole, previousRole],
+      children: experienceFiles,
     },
     readmeMd,
   ],

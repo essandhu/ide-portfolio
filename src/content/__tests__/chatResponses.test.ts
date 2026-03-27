@@ -38,7 +38,7 @@ describe('Chat responses', () => {
 describe('chatResponses uses profile config', () => {
   it('experience response contains current company', () => {
     const response = getChatResponse('experience');
-    expect(response).toContain(profile.experience.current.company);
+    expect(response).toContain(profile.experience[0].company);
   });
 
   it('contact response contains email', () => {
