@@ -28,12 +28,12 @@ export function PanelArea() {
       </div>
       <div className={styles.content}>
         {bottomPanel === 'terminal' && (
-          <div data-testid="terminal-panel">
+          <div data-testid="terminal-panel" style={{ height: '100%' }}>
             <TerminalPanel />
           </div>
         )}
         {bottomPanel === 'problems' && (
-          <div data-testid="problems-panel">
+          <div data-testid="problems-panel" style={{ height: '100%' }}>
             <Problems />
           </div>
         )}

@@ -34,4 +34,10 @@ describe('PanelArea', () => {
     const terminalTab = screen.getByText('Terminal').closest('[data-active]');
     expect(terminalTab?.getAttribute('data-active')).toBe('true');
   });
+
+  it('terminal wrapper fills the content area', () => {
+    renderPanel();
+    const wrapper = screen.getByTestId('terminal-panel');
+    expect(wrapper.style.height).toBe('100%');
+  });
 });
