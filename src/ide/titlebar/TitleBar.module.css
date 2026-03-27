@@ -10,6 +10,16 @@
   flex-shrink: 0;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 30px;
+  color: var(--fg-secondary);
+  flex-shrink: 0;
+}
+
 .title {
   flex: 1;
   text-align: center;

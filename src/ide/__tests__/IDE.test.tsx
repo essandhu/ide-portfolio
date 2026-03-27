@@ -49,6 +49,12 @@ describe('IDE shell', () => {
     expect(editorArea.contains(panelArea)).toBe(true);
   });
 
+  it('renders a logo in the title bar', () => {
+    renderIDE();
+    const titlebar = screen.getByTestId('titlebar');
+    expect(titlebar.querySelector('[data-testid="logo"]')).toBeInTheDocument();
+  });
+
   it('activity bar icons are SVG elements, not emoji', () => {
     renderIDE();
     const activitybar = screen.getByTestId('activitybar');
