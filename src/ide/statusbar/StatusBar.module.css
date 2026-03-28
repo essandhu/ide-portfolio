@@ -24,3 +24,30 @@
 .item {
   cursor: default;
 }
+
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--fg-secondary, #858585);
+}
+
+.tipText {
+  opacity: 0.8;
+}
+
+.tipDismiss {
+  background: none;
+  border: none;
+  color: var(--fg-secondary, #858585);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.tipDismiss:hover {
+  opacity: 1;
+}
