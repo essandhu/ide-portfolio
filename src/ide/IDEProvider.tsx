@@ -4,6 +4,7 @@ import { VirtualFileSystem } from '../terminal/VirtualFileSystem';
 import { portfolioFs } from '../content/fileSystem';
 import { loadRecentFiles, saveRecentFiles, loadPreference, savePreference } from './persistence';
 import { profile, projectPath, experiencePath } from '../config/profile';
+import { getPreviewType } from './editor/previews/previewRegistry';
 
 export type SidebarPanel = 'explorer' | 'search' | 'outline' | 'portfolio' | 'chat';
 export type BottomPanel = 'terminal' | 'problems' | 'output';
@@ -80,6 +81,9 @@ export function IDEProvider({ children }: IDEProviderProps) {
   const openFile = useCallback((path: string) => {
     setOpenTabs((prev) => {
       if (prev.includes(path)) return prev;
+      if (getPreviewType(path)) {
+        setPreviewMode(pm => pm[path] !== undefined ? pm : { ...pm, [path]: true });
+      }
       return [...prev, path];
     });
     setActiveFile(path);

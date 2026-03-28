@@ -30,10 +30,9 @@ function PreviewPaneWithPreview({
   content: string;
   language: string;
 }) {
-  const { openFile, togglePreview } = useIDE();
+  const { openFile } = useIDE();
   useEffect(() => {
     openFile(path);
-    togglePreview(path);
   }, []);
   return <PreviewPane path={path} content={content} language={language} />;
 }
@@ -48,7 +47,7 @@ export const project = {
 `;
 
 describe('PreviewPane', () => {
-  it('shows source view by default', () => {
+  it('auto-previews previewable files when opened', () => {
     render(
       <IDEProvider>
         <PreviewPaneWithFile
@@ -59,8 +58,9 @@ describe('PreviewPane', () => {
       </IDEProvider>,
     );
     const sourceView = screen.getByTestId('source-view');
-    expect(sourceView).toBeInTheDocument();
-    expect(sourceView.className).not.toContain('hidden');
+    expect(sourceView.className).toContain('hidden');
+    const previewView = screen.getByTestId('preview-view');
+    expect(previewView.className).toContain('visible');
   });
 
   it('shows preview view when preview mode is toggled', () => {

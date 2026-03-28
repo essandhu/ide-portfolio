@@ -25,7 +25,9 @@ describe('Breadcrumbs', () => {
     );
     expect(screen.getByText('src')).toBeInTheDocument();
     expect(screen.getByText('projects')).toBeInTheDocument();
-    expect(screen.getByText(projectPath(0).split('/').pop()!)).toBeInTheDocument();
+    // Project files auto-preview, so the breadcrumb includes "(Preview)" suffix
+    const fileName = projectPath(0).split('/').pop()!;
+    expect(screen.getByText(new RegExp(`^${fileName}`))).toBeInTheDocument();
   });
 
   it('shows nothing when no file is active', () => {

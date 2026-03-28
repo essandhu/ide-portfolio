@@ -137,4 +137,16 @@ describe('IDEProvider', () => {
     expect(result.current.openTabs).toContain(WELCOME_TAB);
     expect(result.current.activeFile).toBe(WELCOME_TAB);
   });
+
+  it('auto-enables preview for previewable files', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.openFile('/src/projects/sentinel.tsx'));
+    expect(result.current.previewMode['/src/projects/sentinel.tsx']).toBe(true);
+  });
+
+  it('does not auto-enable preview for non-previewable files', () => {
+    const { result } = renderHook(() => useIDE(), { wrapper });
+    act(() => result.current.openFile('/src/about.ts'));
+    expect(result.current.previewMode['/src/about.ts']).toBeUndefined();
+  });
 });

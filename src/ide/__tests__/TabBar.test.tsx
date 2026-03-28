@@ -27,13 +27,14 @@ describe('TabBar', () => {
   it('renders open tabs', () => {
     renderTabBar(['/src/about.ts', '/src/skills.ts']);
     expect(screen.getByText('about.ts')).toBeInTheDocument();
-    expect(screen.getByText('skills.ts')).toBeInTheDocument();
+    // skills.ts is previewable, so it auto-enables preview and shows "(Preview)" suffix
+    expect(screen.getByText(/^skills\.ts/)).toBeInTheDocument();
   });
 
   it('highlights the active tab', () => {
     renderTabBar(['/src/about.ts', '/src/skills.ts']);
-    // Last opened file is active
-    const activeTab = screen.getByText('skills.ts').closest('[data-active]');
+    // Last opened file is active; skills.ts auto-previews so text includes "(Preview)"
+    const activeTab = screen.getByText(/^skills\.ts/).closest('[data-active]');
     expect(activeTab?.getAttribute('data-active')).toBe('true');
   });
 
