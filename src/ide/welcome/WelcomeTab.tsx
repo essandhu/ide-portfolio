@@ -15,12 +15,6 @@ export function WelcomeTab() {
 
   const walkthroughRows: WalkthroughRow[] = [
     {
-      icon: <FolderIcon />,
-      title: 'View projects',
-      description: profile.projects.slice(0, 3).map((p) => p.name).join(', ') + (profile.projects.length > 3 ? ' and more' : ''),
-      onClick: () => openFile(projectPath(0)),
-    },
-    {
       icon: <DocumentIcon />,
       title: 'Read resume',
       description: 'Full career history and skills',
@@ -51,6 +45,27 @@ export function WelcomeTab() {
         <div className={styles.divider} />
         <div className={styles.columns}>
           <div className={styles.left}>
+            <div className={styles.projectsSection}>
+              <div className={styles.row}>
+                <span className={styles.rowIcon}><FolderIcon /></span>
+                <div className={styles.rowText}>
+                  <div className={styles.rowTitle}>Projects</div>
+                </div>
+              </div>
+              {profile.projects.map((project, i) => (
+                <div
+                  key={project.name}
+                  className={styles.subRow}
+                  onClick={() => openFile(projectPath(i))}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <span className={styles.subRowName}>{project.name}</span>
+                  <span className={styles.subRowDesc}>{project.tech.slice(0, 3).join(', ')}</span>
+                  <span className={styles.chevron}>&rsaquo;</span>
+                </div>
+              ))}
+            </div>
             {walkthroughRows.map((row) => (
               <div key={row.title} className={styles.row} onClick={row.onClick} role="button" tabIndex={0}>
                 <span className={styles.rowIcon}>{row.icon}</span>

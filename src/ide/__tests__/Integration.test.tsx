@@ -55,7 +55,7 @@ describe('Feature integration', () => {
 
     renderIDE();
     // Should see walkthrough content from the Welcome tab
-    expect(screen.getByText('View projects')).toBeInTheDocument();
+    expect(screen.getByTestId('welcome-tab')).toBeInTheDocument();
     expect(screen.getByText('Read resume')).toBeInTheDocument();
   });
 
@@ -67,7 +67,7 @@ describe('Feature integration', () => {
     });
 
     renderIDE();
-    expect(screen.queryByText('View projects')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('welcome-tab')).not.toBeInTheDocument();
   });
 
   it('menu bar is visible with all four menus', () => {

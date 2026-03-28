@@ -114,3 +114,32 @@
 .link:hover {
   text-decoration: underline;
 }
+
+.projectsSection {
+  margin-bottom: 4px;
+}
+
+.subRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 44px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.subRow:hover {
+  background: #2a2d2e;
+}
+
+.subRowName {
+  font-size: 13px;
+  color: #3b8eea;
+  font-weight: 500;
+}
+
+.subRowDesc {
+  font-size: 12px;
+  color: #858585;
+  flex: 1;
+}

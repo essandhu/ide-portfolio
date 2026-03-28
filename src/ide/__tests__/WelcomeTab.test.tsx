@@ -19,12 +19,19 @@ describe('WelcomeTab', () => {
     expect(screen.getByText(profile.title)).toBeInTheDocument();
   });
 
-  it('renders four walkthrough rows', () => {
+  it('renders walkthrough sections', () => {
     renderWelcome();
-    expect(screen.getByText('View projects')).toBeInTheDocument();
+    expect(screen.getByText('Projects')).toBeInTheDocument();
     expect(screen.getByText('Read resume')).toBeInTheDocument();
     expect(screen.getByText(`Chat with ${profile.name}`)).toBeInTheDocument();
     expect(screen.getByText('Get in touch')).toBeInTheDocument();
+  });
+
+  it('renders individual project links', () => {
+    renderWelcome();
+    for (const project of profile.projects) {
+      expect(screen.getByText(project.name)).toBeInTheDocument();
+    }
   });
 
   it('renders the RECENT section with default files', () => {
