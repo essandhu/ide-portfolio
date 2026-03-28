@@ -30,9 +30,9 @@ export function getPreviewType(path: string): PreviewType | null {
 }
 
 export function parseProjectData(source: string): ProjectData {
-  const nameMatch = source.match(/name:\s*['"]([^'"]+)['"]/);
-  const descMatch = source.match(/description:\s*['"]([^'"]+)['"]/);
-  const urlMatch = source.match(/url:\s*['"]([^'"]+)['"]/);
+  const nameMatch = source.match(/name:\s*(['"`])((?:(?!\1).)*)\1/);
+  const descMatch = source.match(/description:\s*(['"`])((?:(?!\1).)*)\1/);
+  const urlMatch = source.match(/url:\s*(['"`])((?:(?!\1).)*)\1/);
   const techMatch = source.match(/tech:\s*\[([\s\S]*?)\]/);
   const tech: string[] = [];
   if (techMatch) {
@@ -40,10 +40,10 @@ export function parseProjectData(source: string): ProjectData {
     for (const item of items) tech.push(item[1]);
   }
   return {
-    name: nameMatch?.[1] ?? 'Untitled',
-    description: descMatch?.[1] ?? '',
+    name: nameMatch?.[2] ?? 'Untitled',
+    description: descMatch?.[2] ?? '',
     tech,
-    url: urlMatch?.[1],
+    url: urlMatch?.[2],
   };
 }
 

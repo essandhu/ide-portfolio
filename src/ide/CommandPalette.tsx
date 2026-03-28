@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useIDE } from './useIDE';
 import { themes } from '../themes';
-import { profile } from '../config/profile';
+import { profile, projectPath, experiencePath } from '../config/profile';
 import styles from './CommandPalette.module.css';
 
 interface PaletteCommand {
@@ -66,27 +66,19 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
         onClose();
       },
     },
-    {
-      id: 'portfolio:project-alpha',
-      label: `Portfolio: ${profile.projects[0]?.name ?? 'Project'}`,
+    ...profile.projects.map((p, i) => ({
+      id: `portfolio:project-${i}`,
+      label: `Portfolio: ${p.name}`,
       action: () => {
-        openFile('/src/projects/project-alpha.tsx');
+        openFile(projectPath(i));
         onClose();
       },
-    },
-    {
-      id: 'portfolio:project-beta',
-      label: `Portfolio: ${profile.projects[1]?.name ?? 'Project'}`,
-      action: () => {
-        openFile('/src/projects/project-beta.tsx');
-        onClose();
-      },
-    },
+    })),
     ...profile.experience.map((role, i) => ({
       id: `portfolio:role-${i}`,
       label: `Portfolio: ${role.company} \u00b7 ${role.title}`,
       action: () => {
-        openFile(`/src/experience/role-${i}.md`);
+        openFile(experiencePath(i));
         onClose();
       },
     })),

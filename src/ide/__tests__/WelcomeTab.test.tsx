@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { IDEProvider } from '../IDEProvider';
 import { WelcomeTab } from '../welcome/WelcomeTab';
-import { profile } from '../../config/profile';
+import { profile, projectPath } from '../../config/profile';
 
 function renderWelcome() {
   return render(
@@ -33,7 +33,8 @@ describe('WelcomeTab', () => {
     // Default recent files should show
     expect(screen.getByText('about.ts')).toBeInTheDocument();
     expect(screen.getByText('skills.ts')).toBeInTheDocument();
-    expect(screen.getByText('project-alpha.tsx')).toBeInTheDocument();
+    const firstProjectFile = projectPath(0).split('/').pop()!;
+    expect(screen.getByText(firstProjectFile)).toBeInTheDocument();
   });
 
   it('renders the CONNECT section', () => {

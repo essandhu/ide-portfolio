@@ -1,6 +1,6 @@
 import { useIDE } from '../useIDE';
 import { FolderIcon, DocumentIcon, ChatIcon, EnvelopeIcon } from './welcomeIcons';
-import { profile } from '../../config/profile';
+import { profile, projectPath, experiencePath } from '../../config/profile';
 import styles from './WelcomeTab.module.css';
 
 interface WalkthroughRow {
@@ -17,14 +17,14 @@ export function WelcomeTab() {
     {
       icon: <FolderIcon />,
       title: 'View projects',
-      description: 'React, TypeScript, WebGL and more',
-      onClick: () => openFile('/src/projects/project-alpha.tsx'),
+      description: profile.projects.slice(0, 3).map((p) => p.name).join(', ') + (profile.projects.length > 3 ? ' and more' : ''),
+      onClick: () => openFile(projectPath(0)),
     },
     {
       icon: <DocumentIcon />,
       title: 'Read resume',
       description: 'Full career history and skills',
-      onClick: () => openFile('/src/experience/current-role.md'),
+      onClick: () => openFile(experiencePath(0)),
     },
     {
       icon: <ChatIcon />,
@@ -40,7 +40,7 @@ export function WelcomeTab() {
     },
   ];
 
-  const defaultRecent = ['/src/about.ts', '/src/skills.ts', '/src/projects/project-alpha.tsx'];
+  const defaultRecent = ['/src/about.ts', '/src/skills.ts', projectPath(0)];
   const displayRecent = recentFiles.length > 0 ? recentFiles.slice(0, 3) : defaultRecent;
 
   return (

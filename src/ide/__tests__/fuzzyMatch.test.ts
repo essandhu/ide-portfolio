@@ -1,13 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { fuzzyMatchFiles } from '../quickopen/fuzzyMatch';
+import { projectPath } from '../../config/profile';
 
 describe('fuzzyMatchFiles', () => {
   const files = [
     'src/about.ts',
     'src/skills.ts',
     'src/contact.ts',
-    'src/projects/project-alpha.tsx',
-    'src/projects/project-beta.tsx',
+    projectPath(0).replace(/^\//, ''),
+    projectPath(1).replace(/^\//, ''),
   ];
 
   it('returns all files when query is empty', () => {

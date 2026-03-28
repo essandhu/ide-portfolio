@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useIDE } from '../useIDE';
 import { loadPreference, savePreference } from '../persistence';
-import { profile } from '../../config/profile';
+import { profile, projectPath, experiencePath } from '../../config/profile';
 import styles from './PortfolioPanel.module.css';
 
 interface LeafItem {
@@ -19,26 +19,18 @@ interface PortfolioSection {
 const portfolioSections: PortfolioSection[] = [
   {
     name: 'Projects',
-    items: [
-      {
-        label: profile.projects[0]?.name ?? 'Project',
-        path: '/src/projects/project-alpha.tsx',
-        dot: '#3b8eea',
-        tooltip: profile.projects[0]?.description ?? '',
-      },
-      {
-        label: profile.projects[1]?.name ?? 'Project',
-        path: '/src/projects/project-beta.tsx',
-        dot: '#3b8eea',
-        tooltip: profile.projects[1]?.description ?? '',
-      },
-    ],
+    items: profile.projects.map((p, i) => ({
+      label: p.name,
+      path: projectPath(i),
+      dot: '#3b8eea',
+      tooltip: p.description,
+    })),
   },
   {
     name: 'Experience',
     items: profile.experience.map((role, i) => ({
       label: `${role.company} \u00b7 ${role.title}`,
-      path: `/src/experience/role-${i}.md`,
+      path: experiencePath(i),
       dot: '#4ec9b0',
       tooltip: `${role.period} \u00b7 ${role.location}`,
     })),
@@ -50,7 +42,7 @@ const portfolioSections: PortfolioSection[] = [
         label: 'All Skills',
         path: '/src/skills.ts',
         dot: '#c586c0',
-        tooltip: '11 technologies across 4 categories',
+        tooltip: `${profile.skills.length} technologies across ${new Set(profile.skills.map((s) => s.category)).size} categories`,
       },
     ],
   },

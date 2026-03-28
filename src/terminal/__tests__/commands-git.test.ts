@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { CommandInterpreter } from '../CommandInterpreter';
 import { VirtualFileSystem } from '../VirtualFileSystem';
 import { registerGitCommands } from '../commands/git';
+import { profile } from '../../config/profile';
 import type { VirtualDirectory } from '../VirtualFileSystem';
 
 const mockFs: VirtualDirectory = {
@@ -30,10 +31,10 @@ describe('Git commands', () => {
       expect(result.text).toContain('Date:');
     });
 
-    it('contains multiple log entries', () => {
+    it('contains log entries matching experience count', () => {
       const result = interpreter.execute('git log');
       const commitCount = (result.text.match(/commit [a-f0-9]+/g) || []).length;
-      expect(commitCount).toBeGreaterThanOrEqual(2);
+      expect(commitCount).toBe(profile.experience.length);
     });
   });
 

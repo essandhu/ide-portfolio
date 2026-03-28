@@ -1,4 +1,5 @@
 import type { GhostComment } from '../terminal/VirtualFileSystem';
+import { projectPath, experiencePath } from '../config/profile';
 
 export const ghostComments: Record<string, GhostComment[]> = {
   '/src/about.ts': [
@@ -37,7 +38,7 @@ export const ghostComments: Record<string, GhostComment[]> = {
       delay: 2000,
     },
   ],
-  '/src/projects/project-alpha.tsx': [
+  [projectPath(0)]: [
     {
       line: 8,
       text: '// AI: Meta! A portfolio project that describes itself',
@@ -49,7 +50,7 @@ export const ghostComments: Record<string, GhostComment[]> = {
       delay: 3500,
     },
   ],
-  '/src/experience/current-role.md': [
+  [experiencePath(0)]: [
     {
       line: 3,
       text: '<!-- AI: The diff view shows your career growth — nice touch -->',

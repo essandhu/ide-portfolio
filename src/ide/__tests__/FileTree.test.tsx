@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { IDEProvider } from '../IDEProvider';
 import { FileTree } from '../sidebar/FileTree';
 import { useIDE } from '../useIDE';
+import { projectPath } from '../../config/profile';
 
 const renderFileTree = () =>
   render(
@@ -22,16 +23,18 @@ describe('FileTree', () => {
 
   it('expands a directory on click', async () => {
     renderFileTree();
+    const firstProjectFile = projectPath(0).split('/').pop()!;
     await userEvent.click(screen.getByText('projects'));
-    expect(screen.getByText('project-alpha.tsx')).toBeInTheDocument();
+    expect(screen.getByText(firstProjectFile)).toBeInTheDocument();
   });
 
   it('collapses a directory on second click', async () => {
     renderFileTree();
+    const firstProjectFile = projectPath(0).split('/').pop()!;
     await userEvent.click(screen.getByText('projects'));
-    expect(screen.getByText('project-alpha.tsx')).toBeInTheDocument();
+    expect(screen.getByText(firstProjectFile)).toBeInTheDocument();
     await userEvent.click(screen.getByText('projects'));
-    expect(screen.queryByText('project-alpha.tsx')).not.toBeInTheDocument();
+    expect(screen.queryByText(firstProjectFile)).not.toBeInTheDocument();
   });
 
   it('opens a file in editor on click', async () => {

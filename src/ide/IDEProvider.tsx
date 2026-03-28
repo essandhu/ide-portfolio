@@ -3,6 +3,7 @@ import { themes, defaultThemeId, type IDETheme } from '../themes';
 import { VirtualFileSystem } from '../terminal/VirtualFileSystem';
 import { portfolioFs } from '../content/fileSystem';
 import { loadRecentFiles, saveRecentFiles, loadPreference, savePreference } from './persistence';
+import { profile, projectPath, experiencePath } from '../config/profile';
 
 export type SidebarPanel = 'explorer' | 'search' | 'outline' | 'portfolio' | 'chat';
 export type BottomPanel = 'terminal' | 'problems' | 'output';
@@ -99,8 +100,8 @@ export function IDEProvider({ children }: IDEProviderProps) {
 
   const PREVIEWABLE_PATHS = [
     '/src/about.ts', '/src/skills.ts', '/src/contact.ts',
-    '/src/projects/project-alpha.tsx', '/src/projects/project-beta.tsx',
-    '/src/experience/current-role.md', '/src/experience/previous-role.md',
+    ...profile.projects.map((_, i) => projectPath(i)),
+    ...profile.experience.map((_, i) => experiencePath(i)),
   ];
 
   const isPreviewable = useCallback((path: string) => {

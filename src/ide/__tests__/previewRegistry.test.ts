@@ -5,10 +5,11 @@ import {
   parseSkillsData,
   parseRoleData,
 } from '../editor/previews/previewRegistry';
+import { projectPath, experiencePath } from '../../config/profile';
 
 describe('getPreviewType', () => {
   it('returns "project" for project file paths', () => {
-    expect(getPreviewType('/src/projects/project-alpha.tsx')).toBe('project');
+    expect(getPreviewType(projectPath(0))).toBe('project');
   });
 
   it('returns null for project index file', () => {
@@ -20,7 +21,7 @@ describe('getPreviewType', () => {
   });
 
   it('returns "role" for experience paths', () => {
-    expect(getPreviewType('/src/experience/current-role.md')).toBe('role');
+    expect(getPreviewType(experiencePath(0))).toBe('role');
   });
 
   it('returns null for non-previewable paths', () => {

@@ -4,6 +4,7 @@ import { IDEProvider } from '../IDEProvider';
 import { Breadcrumbs } from '../editor/Breadcrumbs';
 import { useIDE } from '../useIDE';
 import { useEffect } from 'react';
+import { projectPath } from '../../config/profile';
 
 function WithActiveFile({ file, children }: { file: string; children: React.ReactNode }) {
   const { openFile } = useIDE();
@@ -17,14 +18,14 @@ describe('Breadcrumbs', () => {
   it('renders path segments for active file', () => {
     render(
       <IDEProvider>
-        <WithActiveFile file="/src/projects/project-alpha.tsx">
+        <WithActiveFile file={projectPath(0)}>
           <Breadcrumbs />
         </WithActiveFile>
       </IDEProvider>,
     );
     expect(screen.getByText('src')).toBeInTheDocument();
     expect(screen.getByText('projects')).toBeInTheDocument();
-    expect(screen.getByText('project-alpha.tsx')).toBeInTheDocument();
+    expect(screen.getByText(projectPath(0).split('/').pop()!)).toBeInTheDocument();
   });
 
   it('shows nothing when no file is active', () => {

@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { profile } from '../../config/profile';
+import { profile, experiencePath } from '../../config/profile';
 import { portfolioFs } from '../fileSystem';
 import { VirtualFileSystem } from '../../terminal/VirtualFileSystem';
+
+const firstExpFile = experiencePath(0).replace('/src/', '');
 
 describe('Portfolio file system', () => {
   it('has a root directory named src', () => {
@@ -33,14 +35,14 @@ describe('Portfolio file system', () => {
 
   it('contains experience files as markdown', () => {
     const vfs = new VirtualFileSystem(portfolioFs);
-    const file = vfs.readFile('experience/role-0.md');
+    const file = vfs.readFile(firstExpFile);
     expect(file).not.toBeNull();
     expect(file!.language).toBe('markdown');
   });
 
   it('has originalContent defined for experience files (enables diff)', () => {
     const vfs = new VirtualFileSystem(portfolioFs);
-    const file = vfs.readFile('experience/role-0.md');
+    const file = vfs.readFile(firstExpFile);
     expect(file!.originalContent).toBeDefined();
     expect(file!.originalContent.length).toBeGreaterThan(0);
   });
@@ -102,8 +104,8 @@ describe('fileSystem uses profile config', () => {
     expect(file?.content).toContain(profile.contact.email);
   });
 
-  it('role-0.md contains the first company', () => {
-    const file = vfs.readFile('/src/experience/role-0.md');
+  it('experience file contains the first company', () => {
+    const file = vfs.readFile(experiencePath(0));
     expect(file?.content).toContain(profile.experience[0].company);
   });
 });

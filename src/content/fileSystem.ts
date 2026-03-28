@@ -11,7 +11,7 @@ const aboutTs: VirtualFile = {
   interests: string[];
 }
 
-export const ${profile.name.toLowerCase()}: Person = {
+export const ${profile.name.toLowerCase().replace(/\s+/g, '_')}: Person = {
   name: '${profile.name}',
   title: '${profile.title}',
   location: '${profile.location}',
@@ -28,7 +28,7 @@ ${profile.interests.map((i) => `    '${i}',`).join('\n')}
   interests: string[];
 }
 
-export const ${profile.name.toLowerCase()}: Person = {
+export const ${profile.name.toLowerCase().replace(/\s+/g, '_')}: Person = {
   name: '${profile.name}',
   title: '${profile.title}',
   location: '${profile.location}',
@@ -94,79 +94,42 @@ export const contact: ContactInfo = {
   language: 'typescript',
 };
 
-const projectAlpha: VirtualFile = {
-  name: 'project-alpha.tsx',
-  content: `interface ProjectProps {
+const toKebab = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+const toPascal = (s: string) => s.replace(/(?:^|\s)\w/g, (c) => c.trim().toUpperCase()).replace(/\s+/g, '');
+
+const projectFiles: VirtualFile[] = profile.projects.map((p) => {
+  const kebab = toKebab(p.name);
+  const pascal = toPascal(p.name);
+  const body = `interface ProjectProps {
   name: string;
   description: string;
   tech: string[];
   url?: string;
 }
 
-export const ProjectAlpha = (): ProjectProps => ({
-  name: '${profile.projects[0]?.name ?? 'Project Alpha'}',
-  description: '${profile.projects[0]?.description ?? 'A project.'}',
-  tech: [${profile.projects[0]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
-  url: '${profile.projects[0]?.url ?? ''}',
-});`,
-  originalContent: `interface ProjectProps {
-  name: string;
-  description: string;
-  tech: string[];
-  url?: string;
-}
-
-export const ProjectAlpha = (): ProjectProps => ({
-  name: '${profile.projects[0]?.name ?? 'Project Alpha'}',
-  description: '${profile.projects[0]?.description ?? 'A project.'}',
-  tech: [${profile.projects[0]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
-  url: '${profile.projects[0]?.url ?? ''}',
-});`,
-  language: 'typescriptreact',
-};
-
-const projectBeta: VirtualFile = {
-  name: 'project-beta.tsx',
-  content: `interface ProjectProps {
-  name: string;
-  description: string;
-  tech: string[];
-  url?: string;
-}
-
-export const ProjectBeta = (): ProjectProps => ({
-  name: '${profile.projects[1]?.name ?? 'Project Beta'}',
-  description: '${profile.projects[1]?.description ?? 'A project.'}',
-  tech: [${profile.projects[1]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
-  url: '${profile.projects[1]?.url ?? ''}',
-});`,
-  originalContent: `interface ProjectProps {
-  name: string;
-  description: string;
-  tech: string[];
-  url?: string;
-}
-
-export const ProjectBeta = (): ProjectProps => ({
-  name: '${profile.projects[1]?.name ?? 'Project Beta'}',
-  description: '${profile.projects[1]?.description ?? 'A project.'}',
-  tech: [${profile.projects[1]?.tech.map((t) => `'${t}'`).join(', ') ?? ''}],
-  url: '${profile.projects[1]?.url ?? ''}',
-});`,
-  language: 'typescriptreact',
-};
+export const ${pascal} = (): ProjectProps => ({
+  name: '${p.name}',
+  description: "${p.description.replace(/"/g, '\\"')}",
+  tech: [${p.tech.map((t) => `'${t}'`).join(', ')}],
+  url: '${p.url ?? ''}',
+});`;
+  return {
+    name: `${kebab}.tsx`,
+    content: body,
+    originalContent: body,
+    language: 'typescriptreact' as const,
+  };
+});
 
 const projectsIndex: VirtualFile = {
   name: 'index.ts',
-  content: `export { ProjectAlpha } from './project-alpha';
-export { ProjectBeta } from './project-beta';`,
-  originalContent: `export { ProjectAlpha } from './project-alpha';
-export { ProjectBeta } from './project-beta';`,
+  content: profile.projects.map((p) => `export { ${toPascal(p.name)} } from './${toKebab(p.name)}';`).join('\n'),
+  originalContent: profile.projects.map((p) => `export { ${toPascal(p.name)} } from './${toKebab(p.name)}';`).join('\n'),
   language: 'typescript',
 };
 
 const experienceFiles: VirtualFile[] = profile.experience.map((role, i) => ({
-  name: `role-${i}.md`,
+  name: `${toKebab(role.company)}.md`,
   content: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
   originalContent: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
   language: 'markdown' as const,
@@ -231,7 +194,7 @@ export const portfolioFs: VirtualDirectory = {
     contactTs,
     {
       name: 'projects',
-      children: [projectAlpha, projectBeta, projectsIndex],
+      children: [...projectFiles, projectsIndex],
     },
     {
       name: 'experience',
