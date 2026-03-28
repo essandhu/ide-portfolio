@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# IDE Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A software engineering portfolio built as an interactive VS Code-style IDE. Browse projects, experience, and skills through a familiar code editor interface.
 
-Currently, two official plugins are available:
+**Live site:** [ericksandhu.dev](https://ericksandhu.dev)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Monaco editor with syntax highlighting and file browsing
+- Integrated terminal with simulated commands
+- AI chat assistant for navigating portfolio content
+- Multiple color themes
+- Command palette and fuzzy file search
+- Responsive sidebar with file tree, search, and outline panels
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Navigating the Portfolio
 
-## Expanding the ESLint configuration
+**Preview mode** — Files under `projects/`, `experience/`, and `skills.ts` support a rich preview. Click the preview toggle in the tab bar or press `Ctrl+Shift+V` to switch between source code and a formatted view.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Quick open** — Press `Ctrl+P` to fuzzy-search any file by name. Use `Ctrl+Shift+P` to open the command palette for themes, fonts, and quick actions.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Sidebar panels** — The activity bar on the left gives access to the file explorer, full-text search, document outline, a portfolio overview, and an AI chat assistant you can ask questions about the portfolio.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Terminal** — The integrated terminal supports commands like `ls`, `cat`, `git log` (shows career history as commits), `whoami`, `theme <name>`, and `help`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Keyboard shortcuts**
+
+| Action | Shortcut |
+|--------|----------|
+| Quick Open | `Ctrl+P` |
+| Command Palette | `Ctrl+Shift+P` |
+| Toggle Preview | `Ctrl+Shift+V` |
+| Toggle Sidebar | `Ctrl+B` |
+| Close Tab | `Ctrl+W` |
+
+## Tech Stack
+
+- React 19, TypeScript, Vite
+- Monaco Editor
+- xterm.js
+- Vitest + React Testing Library
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview production build |
+| `npm run test` | Run tests in watch mode |
+| `npm run test:run` | Run tests once |
+| `npm run lint` | Lint with ESLint |
