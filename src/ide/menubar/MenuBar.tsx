@@ -21,7 +21,6 @@ export const MenuBar = () => {
     theme,
     setThemeId,
     recentFiles,
-    sidebarVisible,
     setQuickOpenVisible,
   } = useIDE();
 

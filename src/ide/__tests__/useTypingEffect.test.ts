@@ -46,7 +46,7 @@ describe('useTypingEffect', () => {
   });
 
   it('cleans up interval on unmount', () => {
-    const clearSpy = vi.spyOn(global, 'clearInterval');
+    const clearSpy = vi.spyOn(globalThis, 'clearInterval');
     const { unmount } = renderHook(() => useTypingEffect('hello world', 30));
     unmount();
     expect(clearSpy).toHaveBeenCalled();

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { profile } from '../profile';
 
 describe('profile config', () => {

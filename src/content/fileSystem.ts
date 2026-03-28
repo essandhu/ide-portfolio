@@ -128,7 +128,7 @@ const projectsIndex: VirtualFile = {
   language: 'typescript',
 };
 
-const experienceFiles: VirtualFile[] = profile.experience.map((role, i) => ({
+const experienceFiles: VirtualFile[] = profile.experience.map((role) => ({
   name: `${toKebab(role.company)}.md`,
   content: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
   originalContent: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
