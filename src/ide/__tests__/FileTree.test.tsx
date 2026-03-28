@@ -60,4 +60,18 @@ describe('FileTree', () => {
     renderFileTree();
     expect(screen.getByTestId('icon-about.ts')).toBeInTheDocument();
   });
+
+  it('shows preview badge on previewable files', async () => {
+    renderFileTree();
+    await userEvent.click(screen.getByText('projects'));
+    const firstProjectFile = projectPath(0).split('/').pop()!;
+    const fileEntry = screen.getByText(firstProjectFile).closest('[role="button"]')!;
+    expect(fileEntry.querySelector('[data-testid="preview-badge"]')).toBeInTheDocument();
+  });
+
+  it('does not show preview badge on non-previewable files', () => {
+    renderFileTree();
+    const aboutEntry = screen.getByText('about.ts').closest('[role="button"]')!;
+    expect(aboutEntry.querySelector('[data-testid="preview-badge"]')).not.toBeInTheDocument();
+  });
 });

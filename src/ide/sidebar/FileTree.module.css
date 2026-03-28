@@ -31,3 +31,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.previewBadge {
+  margin-left: auto;
+  padding-right: 8px;
+  color: var(--fg-secondary, #858585);
+  opacity: 0;
+  transition: opacity 0.15s;
+  display: flex;
+  align-items: center;
+}
+
+.entry:hover .previewBadge {
+  opacity: 0.7;
+}
