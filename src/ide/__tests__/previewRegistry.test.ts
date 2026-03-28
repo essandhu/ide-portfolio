@@ -12,10 +12,6 @@ describe('getPreviewType', () => {
     expect(getPreviewType(projectPath(0))).toBe('project');
   });
 
-  it('returns null for project index file', () => {
-    expect(getPreviewType('/src/projects/index.ts')).toBeNull();
-  });
-
   it('returns "skills" for skills.ts', () => {
     expect(getPreviewType('/src/skills.ts')).toBe('skills');
   });

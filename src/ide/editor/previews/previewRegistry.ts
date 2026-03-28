@@ -23,7 +23,7 @@ export interface RoleData {
 }
 
 export function getPreviewType(path: string): PreviewType | null {
-  if (path.includes('/projects/') && !path.endsWith('index.ts')) return 'project';
+  if (path.includes('/projects/')) return 'project';
   if (path.endsWith('skills.ts')) return 'skills';
   if (path.includes('/experience/')) return 'role';
   return null;

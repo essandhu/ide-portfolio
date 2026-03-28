@@ -121,13 +121,6 @@ export const ${pascal} = (): ProjectProps => ({
   };
 });
 
-const projectsIndex: VirtualFile = {
-  name: 'index.ts',
-  content: profile.projects.map((p) => `export { ${toPascal(p.name)} } from './${toKebab(p.name)}';`).join('\n'),
-  originalContent: profile.projects.map((p) => `export { ${toPascal(p.name)} } from './${toKebab(p.name)}';`).join('\n'),
-  language: 'typescript',
-};
-
 const experienceFiles: VirtualFile[] = profile.experience.map((role) => ({
   name: `${toKebab(role.company)}.md`,
   content: `# ${role.title} — ${role.company}\n\n**${role.period}** | ${role.location}\n\n## Responsibilities\n\n${role.responsibilities.map((r) => `- ${r}`).join('\n')}\n\n## Key Achievements\n\n${role.achievements.map((a) => `- ${a}`).join('\n')}`,
@@ -194,7 +187,7 @@ export const portfolioFs: VirtualDirectory = {
     contactTs,
     {
       name: 'projects',
-      children: [...projectFiles, projectsIndex],
+      children: projectFiles,
     },
     {
       name: 'experience',

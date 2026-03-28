@@ -83,12 +83,7 @@ describe('Portfolio file system', () => {
     }
   });
 
-  it('projects have index.ts barrel export', () => {
-    const vfs = new VirtualFileSystem(portfolioFs);
-    const file = vfs.readFile('projects/index.ts');
-    expect(file).not.toBeNull();
-    expect(file!.content).toContain('export');
-  });
+
 });
 
 describe('fileSystem uses profile config', () => {
