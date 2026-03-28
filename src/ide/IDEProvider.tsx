@@ -58,7 +58,7 @@ export function IDEProvider({ children }: IDEProviderProps) {
   const [font, setFont] = useState('JetBrains Mono');
   const [openTabs, setOpenTabs] = useState<string[]>([]);
   const [activeFile, setActiveFile] = useState<string | null>(null);
-  const [sidebarPanel, setSidebarPanel] = useState<SidebarPanel>('explorer');
+  const [sidebarPanel, setSidebarPanel] = useState<SidebarPanel>('portfolio');
   const [bottomPanel, setBottomPanel] = useState<BottomPanel>('terminal');
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
   const [sidebarVisible, setSidebarVisible] = useState(true);

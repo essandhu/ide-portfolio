@@ -11,9 +11,9 @@ describe('Polish & micro-interactions', () => {
         <ActivityBar />
       </IDEProvider>,
     );
-    // Explorer is active by default
-    const explorerButton = screen.getByLabelText('Explorer');
-    expect(explorerButton.className).toContain('active');
+    // Portfolio is active by default
+    const portfolioButton = screen.getByLabelText('Portfolio');
+    expect(portfolioButton.className).toContain('active');
   });
 
   it('title bar contains menu bar', () => {

@@ -65,7 +65,7 @@ describe('IDEProvider', () => {
 
   it('tracks active sidebar panel', () => {
     const { result } = renderHook(() => useIDE(), { wrapper });
-    expect(result.current.sidebarPanel).toBe('explorer');
+    expect(result.current.sidebarPanel).toBe('portfolio');
     act(() => result.current.setSidebarPanel('chat'));
     expect(result.current.sidebarPanel).toBe('chat');
   });
