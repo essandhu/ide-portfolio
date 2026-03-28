@@ -65,7 +65,7 @@ export const profile: Profile = {
     email: 'essandhu22@gmail.com',
     github: 'https://github.com/essandhu',
     linkedin: 'https://linkedin.com/in/erick-sandhu',
-    website: '',
+    website: 'https://ericksandhu.dev',
   },
   skills: [
     // Languages
