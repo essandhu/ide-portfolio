@@ -1,10 +1,11 @@
-import { createContext, useState, useMemo, useCallback, useEffect, type ReactNode } from 'react';
+import { useState, useMemo, useCallback, type ReactNode } from 'react';
 import { themes, defaultThemeId, type IDETheme } from '../themes';
 import { VirtualFileSystem } from '../terminal/VirtualFileSystem';
 import { portfolioFs } from '../content/fileSystem';
-import { loadRecentFiles, saveRecentFiles, loadPreference, savePreference } from './persistence';
+import { loadRecentFiles, saveRecentFiles } from './persistence';
 import { profile, projectPath, experiencePath } from '../config/profile';
 import { getPreviewType } from './editor/previews/previewRegistry';
+import { IDEContext } from './IDEContext';
 
 export type SidebarPanel = 'explorer' | 'search' | 'outline' | 'portfolio' | 'chat';
 export type BottomPanel = 'terminal' | 'problems' | 'output';
@@ -48,17 +49,22 @@ export interface IDEContextValue {
   openWelcome: () => void;
 }
 
-export const IDEContext = createContext<IDEContextValue | null>(null);
-
 interface IDEProviderProps {
   children: ReactNode;
+  skipWelcome?: boolean;
 }
 
-export function IDEProvider({ children }: IDEProviderProps) {
+const PREVIEWABLE_PATHS = [
+  '/src/about.ts', '/src/skills.ts', '/src/contact.ts',
+  ...profile.projects.map((_, i) => projectPath(i)),
+  ...profile.experience.map((_, i) => experiencePath(i)),
+];
+
+export function IDEProvider({ children, skipWelcome }: IDEProviderProps) {
   const [themeId, setThemeIdState] = useState(defaultThemeId);
   const [font, setFont] = useState('JetBrains Mono');
-  const [openTabs, setOpenTabs] = useState<string[]>([]);
-  const [activeFile, setActiveFile] = useState<string | null>(null);
+  const [openTabs, setOpenTabs] = useState<string[]>(() => skipWelcome ? [] : [WELCOME_TAB]);
+  const [activeFile, setActiveFile] = useState<string | null>(() => skipWelcome ? null : WELCOME_TAB);
   const [sidebarPanel, setSidebarPanel] = useState<SidebarPanel>('portfolio');
   const [bottomPanel, setBottomPanel] = useState<BottomPanel>('terminal');
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
@@ -102,12 +108,6 @@ export function IDEProvider({ children }: IDEProviderProps) {
     setPreviewMode(prev => ({ ...prev, [path]: !prev[path] }));
   }, []);
 
-  const PREVIEWABLE_PATHS = [
-    '/src/about.ts', '/src/skills.ts', '/src/contact.ts',
-    ...profile.projects.map((_, i) => projectPath(i)),
-    ...profile.experience.map((_, i) => experiencePath(i)),
-  ];
-
   const isPreviewable = useCallback((path: string) => {
     return PREVIEWABLE_PATHS.includes(path);
   }, []);
@@ -136,19 +136,6 @@ export function IDEProvider({ children }: IDEProviderProps) {
       return currentTabs[newIndex] ?? null;
     });
   }, [openTabs]);
-
-  useEffect(() => {
-    const hasVisited = loadPreference('hasVisited');
-    if (hasVisited === undefined) {
-      // Either storage is unavailable or user has never visited.
-      // Try to persist the flag — if it sticks, open welcome.
-      savePreference('hasVisited', 'true');
-      const check = loadPreference('hasVisited');
-      if (check === 'true') {
-        openWelcome();
-      }
-    }
-  }, []);
 
   const value = useMemo<IDEContextValue>(
     () => ({

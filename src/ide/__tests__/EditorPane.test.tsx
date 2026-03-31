@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 describe('EditorPane', () => {
   it('renders a placeholder when no file is open', () => {
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <EditorPane />
       </IDEProvider>,
     );
@@ -24,7 +24,7 @@ describe('EditorPane', () => {
       return <EditorPane />;
     };
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <TestHarness />
       </IDEProvider>,
     );
@@ -40,7 +40,7 @@ describe('EditorPane', () => {
       return <EditorPane />;
     };
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <TestHarness />
       </IDEProvider>,
     );

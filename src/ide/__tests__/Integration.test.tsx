@@ -39,35 +39,12 @@ describe('Feature integration', () => {
     mockLoadRecentFiles.mockReturnValue([]);
   });
 
-  it('Welcome tab opens on first visit', () => {
-    // Simulate first visit: hasVisited is undefined, then after save it becomes 'true'
-    mockLoadPreference.mockImplementation((key: string) => {
-      if (key === 'hasVisited') {
-        // First call returns undefined (never visited),
-        // second call (verification after save) returns 'true'
-        if (mockLoadPreference.mock.calls.filter(c => c[0] === 'hasVisited').length <= 1) {
-          return undefined;
-        }
-        return 'true';
-      }
-      return undefined;
-    });
+  it('Welcome tab always opens', () => {
+    mockLoadPreference.mockReturnValue(undefined);
 
     renderIDE();
-    // Should see walkthrough content from the Welcome tab
     expect(screen.getByTestId('welcome-tab')).toBeInTheDocument();
     expect(screen.getByText('Read resume')).toBeInTheDocument();
-  });
-
-  it('Welcome tab does not open on return visit', () => {
-    // Simulate return visit: hasVisited is already 'true'
-    mockLoadPreference.mockImplementation((key: string) => {
-      if (key === 'hasVisited') return 'true';
-      return undefined;
-    });
-
-    renderIDE();
-    expect(screen.queryByTestId('welcome-tab')).not.toBeInTheDocument();
   });
 
   it('menu bar is visible with all four menus', () => {

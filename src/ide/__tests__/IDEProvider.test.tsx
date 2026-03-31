@@ -5,7 +5,7 @@ import { useIDE } from '../useIDE';
 import type { ReactNode } from 'react';
 
 const wrapper = ({ children }: { children: ReactNode }) => (
-  <IDEProvider>{children}</IDEProvider>
+  <IDEProvider skipWelcome>{children}</IDEProvider>
 );
 
 describe('IDEProvider', () => {

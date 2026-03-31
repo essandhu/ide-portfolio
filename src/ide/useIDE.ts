@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { IDEContext } from './IDEProvider';
+import { IDEContext } from './IDEContext';
 import type { IDEContextValue } from './IDEProvider';
 
 export function useIDE(): IDEContextValue {

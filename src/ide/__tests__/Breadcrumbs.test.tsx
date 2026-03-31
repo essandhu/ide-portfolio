@@ -17,7 +17,7 @@ function WithActiveFile({ file, children }: { file: string; children: React.Reac
 describe('Breadcrumbs', () => {
   it('renders path segments for active file', () => {
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <WithActiveFile file={projectPath(0)}>
           <Breadcrumbs />
         </WithActiveFile>
@@ -32,7 +32,7 @@ describe('Breadcrumbs', () => {
 
   it('shows nothing when no file is active', () => {
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <Breadcrumbs />
       </IDEProvider>,
     );
@@ -41,7 +41,7 @@ describe('Breadcrumbs', () => {
 
   it('renders separator between segments', () => {
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <WithActiveFile file="/src/about.ts">
           <Breadcrumbs />
         </WithActiveFile>

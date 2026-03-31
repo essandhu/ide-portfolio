@@ -16,7 +16,7 @@ function WithOpenFiles({ files, children }: { files: string[]; children: React.R
 
 const renderTabBar = (files: string[]) =>
   render(
-    <IDEProvider>
+    <IDEProvider skipWelcome>
       <WithOpenFiles files={files}>
         <TabBar />
       </WithOpenFiles>
@@ -53,7 +53,7 @@ describe('TabBar', () => {
       );
     };
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <Harness />
       </IDEProvider>,
     );
@@ -70,7 +70,7 @@ describe('TabBar', () => {
 
   it('shows nothing when no tabs are open', () => {
     render(
-      <IDEProvider>
+      <IDEProvider skipWelcome>
         <TabBar />
       </IDEProvider>,
     );

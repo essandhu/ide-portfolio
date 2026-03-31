@@ -16,7 +16,7 @@ function OpenFileHelper({ path }: { path: string }) {
 
 function renderOutlinePanel(filePath?: string) {
   return render(
-    <IDEProvider>
+    <IDEProvider skipWelcome>
       {filePath && <OpenFileHelper path={filePath} />}
       <OutlinePanel />
     </IDEProvider>,
