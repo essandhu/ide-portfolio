@@ -77,6 +77,7 @@ export const profile: Profile = {
     { name: 'SQL', category: 'language', proficiency: 4 },
     { name: 'PHP', category: 'language', proficiency: 3 },
     { name: 'C#', category: 'language', proficiency: 3 },
+    { name: 'Go', category: 'language', proficiency: 3 },
 
     // Frameworks
     { name: 'React', category: 'framework', proficiency: 5 },
@@ -89,6 +90,7 @@ export const profile: Profile = {
     { name: 'Vitest', category: 'framework', proficiency: 4 },
     { name: 'Playwright', category: 'framework', proficiency: 4 },
     { name: 'OpenCV', category: 'framework', proficiency: 3 },
+    { name: 'FastAPI', category: 'framework', proficiency: 3 },
 
     // Tools
     { name: 'Git', category: 'tool', proficiency: 5 },
@@ -97,12 +99,14 @@ export const profile: Profile = {
     { name: 'REST APIs', category: 'tool', proficiency: 5 },
     { name: 'Claude Code', category: 'tool', proficiency: 4 },
     { name: 'GitHub Actions', category: 'tool', proficiency: 4 },
+    { name: 'gRPC', category: 'tool', proficiency: 3 },
 
     // Platforms
     { name: 'PostgreSQL', category: 'platform', proficiency: 4 },
     { name: 'MongoDB', category: 'platform', proficiency: 4 },
     { name: 'Redis', category: 'platform', proficiency: 3 },
     { name: 'Google Cloud', category: 'platform', proficiency: 3 },
+    { name: 'Kafka', category: 'platform', proficiency: 3 },
   ],
   education: [
     {
