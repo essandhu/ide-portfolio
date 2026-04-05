@@ -135,6 +135,13 @@ export const profile: Profile = {
   ],
   projects: [
     {
+      name: 'SynapseOMS',
+      description:
+        'Self-hosted order management system for traders working across equities and crypto. Four-service distributed architecture (Go gateway, Python risk engine, Python ML scorer, React dashboard) connected by Kafka and backed by PostgreSQL and Redis. Features sub-10ms gRPC pre-trade risk checks (VaR, concentration, Greeks), ML-scored venue selection via XGBoost, real-time WebSocket streaming, pluggable exchange adapters (Alpaca, Binance), and AI-powered execution analysis via Claude. All data stays on the user\'s machine with Argon2id + AES-256-GCM credential encryption at rest.',
+      tech: ['Go', 'Python', 'React', 'TypeScript', 'Kafka', 'PostgreSQL', 'Redis', 'gRPC', 'XGBoost', 'Docker'],
+      url: 'https://github.com/essandhu/SynapseOMS',
+    },
+    {
       name: 'Sentinel',
       description:
         'Open-source CLI tool for visual regression testing: captures screenshots, diffs against baselines using pixel, SSIM, and ML-based classification, and detects design drift against Figma/Sketch sources across Chromium, Firefox, and WebKit. Includes a bundled local dashboard, GitHub Action for CI with PR comments and status checks, VS Code extension for in-editor diff review, and a watch mode for local development.',
@@ -154,13 +161,6 @@ export const profile: Profile = {
         'Open-source React component library with 40 accessible components published as tree-shakeable npm packages. Features a three-tier design token API (primitive, semantic, component-scoped) with theme switching via a single DOM attribute. Built on Radix Primitives for ARIA/WCAG compliance with dual ESM/CJS builds.',
       tech: ['React', 'TypeScript', 'Radix Primitives', 'Vite', 'Vitest', 'vitest-axe'],
       url: 'https://github.com/essandhu/aurora-ui',
-    },
-    {
-      name: 'SynapseOMS',
-      description:
-        'Self-hosted order management system for traders working across equities and crypto. Four-service distributed architecture (Go gateway, Python risk engine, Python ML scorer, React dashboard) connected by Kafka and backed by PostgreSQL and Redis. Features sub-10ms gRPC pre-trade risk checks (VaR, concentration, Greeks), ML-scored venue selection via XGBoost, real-time WebSocket streaming, pluggable exchange adapters (Alpaca, Binance), and AI-powered execution analysis via Claude. All data stays on the user\'s machine with Argon2id + AES-256-GCM credential encryption at rest.',
-      tech: ['Go', 'Python', 'React', 'TypeScript', 'Kafka', 'PostgreSQL', 'Redis', 'gRPC', 'XGBoost', 'Docker'],
-      url: 'https://github.com/essandhu/SynapseOMS',
     },
     {
       name: 'RTX Drone Showcase',
