@@ -1,4 +1,4 @@
-import { getChatResponse } from '../src/content/chatResponses';
+import { getChatResponse } from '../src/content/chatResponses.js';
 
 const MAX_REQUESTS_PER_SESSION = 10;
 const WINDOW_MS = 60 * 60 * 1000; // 1 hour
