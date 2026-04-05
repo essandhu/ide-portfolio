@@ -1,4 +1,4 @@
-import { profile } from '../config/profile';
+import { profile } from '../config/profile.js';
 
 const categoryLabels: Record<string, string> = {
   language: 'Languages',
