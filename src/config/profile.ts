@@ -156,6 +156,13 @@ export const profile: Profile = {
       url: 'https://github.com/essandhu/aurora-ui',
     },
     {
+      name: 'SynapseOMS',
+      description:
+        'Self-hosted order management system for traders working across equities and crypto. Four-service distributed architecture (Go gateway, Python risk engine, Python ML scorer, React dashboard) connected by Kafka and backed by PostgreSQL and Redis. Features sub-10ms gRPC pre-trade risk checks (VaR, concentration, Greeks), ML-scored venue selection via XGBoost, real-time WebSocket streaming, pluggable exchange adapters (Alpaca, Binance), and AI-powered execution analysis via Claude. All data stays on the user\'s machine with Argon2id + AES-256-GCM credential encryption at rest.',
+      tech: ['Go', 'Python', 'React', 'TypeScript', 'Kafka', 'PostgreSQL', 'Redis', 'gRPC', 'XGBoost', 'Docker'],
+      url: 'https://github.com/essandhu/SynapseOMS',
+    },
+    {
       name: 'RTX Drone Showcase',
       description:
         "UTD Senior Design Capstone — won first place in RTX's collegiate drone competition. Owned full production of autonomous UAV/UGV navigation with ArUco marker detection (OpenCV) and custom pursuit algorithms, making effective tradeoffs between detection accuracy and real-time performance. Executed against a 9-month Agile roadmap with weekly sprints.",
